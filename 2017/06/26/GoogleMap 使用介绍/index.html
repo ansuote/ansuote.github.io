@@ -1,0 +1,940 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="题外话断断续续写了几周，从写 Demo 到做总结，还是花了不少时间，如果文章对你有用，那最好了。不好的地方欢迎交流哈。如若转载，请注明出处。 概述通过本文，你可以知道如何使用 GoogleMap 相关 API、定位当前位置、获取当前所在城市、获取当前位置附近的地点、导航、地点搜索等内容。大致内容，可以查看如下思维导图。本节内容源码请见demo   特别注意：demo 使用的 GoogleMap k">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GoogleMap 使用介绍">
+<meta property="og:url" content="http://yoursite.com/2017/06/26/GoogleMap 使用介绍/index.html">
+<meta property="og:site_name" content="ansuote">
+<meta property="og:description" content="题外话断断续续写了几周，从写 Demo 到做总结，还是花了不少时间，如果文章对你有用，那最好了。不好的地方欢迎交流哈。如若转载，请注明出处。 概述通过本文，你可以知道如何使用 GoogleMap 相关 API、定位当前位置、获取当前所在城市、获取当前位置附近的地点、导航、地点搜索等内容。大致内容，可以查看如下思维导图。本节内容源码请见demo   特别注意：demo 使用的 GoogleMap k">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/GoogleMapXmind.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/google%20map%20console.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/GoogleMapKey.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/googlemap-custom.gif">
+<meta property="og:updated_time" content="2017-07-05T10:15:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GoogleMap 使用介绍">
+<meta name="twitter:description" content="题外话断断续续写了几周，从写 Demo 到做总结，还是花了不少时间，如果文章对你有用，那最好了。不好的地方欢迎交流哈。如若转载，请注明出处。 概述通过本文，你可以知道如何使用 GoogleMap 相关 API、定位当前位置、获取当前所在城市、获取当前位置附近的地点、导航、地点搜索等内容。大致内容，可以查看如下思维导图。本节内容源码请见demo   特别注意：demo 使用的 GoogleMap k">
+<meta name="twitter:image" content="http://op6c410ta.bkt.clouddn.com/GoogleMapXmind.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/06/26/GoogleMap 使用介绍/"/>
+
+
+
+
+
+  <title> GoogleMap 使用介绍 | ansuote </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bbd092b8b5c9a9e3648742e5b07aa693";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ansuote</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/26/GoogleMap 使用介绍/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ansuote">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ansuote">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                GoogleMap 使用介绍
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-26T21:19:46+08:00">
+                2017-06-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>断断续续写了几周，从写 Demo 到做总结，还是花了不少时间，如果文章对你有用，那最好了。不好的地方欢迎交流哈。如若转载，请注明出处。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>通过本文，你可以知道如何使用 GoogleMap 相关 API、定位当前位置、获取当前所在城市、获取当前位置附近的地点、导航、地点搜索等内容。大致内容，可以查看如下思维导图。<a href="https://github.com/ansuote/GoogleMapDemo" target="_blank" rel="external">本节内容源码请见demo</a> </p>
+<p><img src="http://op6c410ta.bkt.clouddn.com/GoogleMapXmind.png" alt=""></p>
+<h3 id="特别注意："><a href="#特别注意：" class="headerlink" title="特别注意："></a><strong>特别注意</strong>：</h3><p>demo 使用的 GoogleMap key 对应我自己电脑的 keystore，如果重新编译项目，生成的apk使用的是你的电脑的 keystore，和我的 keystore 是不一样的，所以要正常运行，</p>
+<ol>
+<li>直接下载我编译好的 apk；</li>
+<li>用我的项目包名，和你自己的 keystore 的 SHA-1 去申请新的 GoogleMap key。（方法在下面，往下看哈）</li>
+</ol>
+<h2 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h2><h3 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h3><p>因为国内众所周知的网络问题，谷歌地图的页面加载和 API 的使用会出现无效的情况，如果你要使用或调试，首先要确保是可以科学上网的。</p>
+<h3 id="设备"><a href="#设备" class="headerlink" title="设备"></a>设备</h3><p>Android 设备，必须<strong>安装了 Google 服务</strong>。</p>
+<h3 id="谷歌账号"><a href="#谷歌账号" class="headerlink" title="谷歌账号"></a>谷歌账号</h3><p>作为用户，不需要拥有或者登录你的 Google 账号。网络和  Google 服务正常即可。</p>
+<p>作为开发者，必须拥有一个 Google 账号。要知道，谷歌地图是不开源的，要使用他的 API ，必须用你的包名，和编译 Android app 的 keystore 的 SHA-1，去申请App 对应的 Google Map Key。获取 Key 的教程官网讲得很详细，<a href="https://developers.google.com/maps/documentation/android-api/signup" target="_blank" rel="external">请看这里</a></p>
+<p><a href="https://console.developers.google.com/project/_/apiui/credential" target="_blank" rel="external">Google API Console</a> 设置完成后，如下图所示：</p>
+<p><img src="http://op6c410ta.bkt.clouddn.com/google%20map%20console.png" alt=""></p>
+<p>把这个 API key 填入 <em>AndroidManifest.xml</em>  ，如图所示：<img src="http://op6c410ta.bkt.clouddn.com/GoogleMapKey.png" alt=""></p>
+<h2 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h2><h3 id="Map-相关"><a href="#Map-相关" class="headerlink" title="Map 相关"></a>Map 相关</h3><h4 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h4><h5 id="初始化-Google-Map"><a href="#初始化-Google-Map" class="headerlink" title="初始化 Google Map"></a>初始化 Google Map</h5><h6 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h6><p>在你的布局文件里面，只需要如下方式声明一个 Fragment，这个 Fragment 是可以放在 LinearLayout 或 RelativeLayout 下面的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;fragment</div><div class="line">    android:id=&quot;@+id/map&quot;</div><div class="line">    android:layout_width=&quot;match_parent&quot;</div><div class="line">    android:layout_height=&quot;match_parent&quot;</div><div class="line">    map:uiZoomControls=&quot;true&quot;</div><div class="line">    map:uiCompass = &quot;true&quot;</div><div class="line">    class=&quot;com.google.android.gms.maps.SupportMapFragment&quot;</div><div class="line">    android:layout_below=&quot;@id/layout_btn&quot;/&gt;</div></pre></td></tr></table></figure></p>
+<h6 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h6><p>在 <em>onCreate</em> 的时候，进行初始化操作。</p>
+<p><code>private GoogleMap mMap;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()</div><div class="line">        .findFragmentById(map);</div><div class="line">mapFragment.getMapAsync(new OnMapReadyCallback() &#123;</div><div class="line">    @Override</div><div class="line">    public void onMapReady(GoogleMap googleMap) &#123;</div><div class="line">        //初始化完 GoogleMap</div><div class="line">        mMap = googleMap;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h5 id="确保-GoogleMap-实例化"><a href="#确保-GoogleMap-实例化" class="headerlink" title="确保 GoogleMap 实例化"></a>确保 GoogleMap 实例化</h5><p>在使用 GoogleMap 相关接口前，必须确保 GoogleMap 已经实例化，即已经在 <em>onMapReady</em>回调中获取了 GoogleMap实例。</p>
+<h4 id="开关类"><a href="#开关类" class="headerlink" title="开关类"></a>开关类</h4><h5 id="定位按钮"><a href="#定位按钮" class="headerlink" title="定位按钮"></a>定位按钮</h5><p>定位功能必须获取用户的位置权限，判断是非获取了用户权限，没有获取则手动请求权限。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> *</div><div class="line"> * 检查定位权限，如果未授权则请求该权限</div><div class="line"> * @return  true：已经授权； false：未授权</div><div class="line"> */</div><div class="line">private boolean checkLocationPermission() &#123;</div><div class="line">    if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)</div><div class="line">            != PackageManager.PERMISSION_GRANTED) &#123;</div><div class="line">        // Permission to access the location is missing.</div><div class="line">        PermissionUtils.requestPermission(this, LOCATION_PERMISSION_REQUEST_CODE,</div><div class="line">                Manifest.permission.ACCESS_FINE_LOCATION, true);</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    return true;</div><div class="line">&#125;</div><div class="line"></div><div class="line">public static void requestPermission(FragmentActivity activity, int requestId,</div><div class="line">                                     String permission, boolean finishActivity) &#123;</div><div class="line">    if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) &#123;</div><div class="line">        // Display a dialog with rationale.</div><div class="line">        PermissionUtils.RationaleDialog.newInstance(requestId, finishActivity)</div><div class="line">                .show(activity.getSupportFragmentManager(), &quot;dialog&quot;);</div><div class="line">    &#125; else &#123;</div><div class="line">        // Location permission has not been granted yet, request it.</div><div class="line">        ActivityCompat.requestPermissions(activity, new String[]&#123;permission&#125;, requestId);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>要让地图上显示开关按钮，只需要设置<code>mMap.setMyLocationEnabled(true);</code></p>
+<p>点击此按钮，地图的摄像头就会开始移动，定位到当前设备所在位置，如果要获取点击此按钮的回调，可以设置监听器 <code>mMap.setOnMyLocationButtonClickListener</code></p>
+<h5 id="放大／缩小按钮"><a href="#放大／缩小按钮" class="headerlink" title="放大／缩小按钮"></a>放大／缩小按钮</h5><p>地图的放大缩小，就以摄像头焦点（地图中心）进行缩放。要出现这个开关，只需要</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UiSettings uiSettings = mMap.getUiSettings();</div><div class="line">uiSettings.setZoomControlsEnabled(true);</div></pre></td></tr></table></figure>
+<h5 id="指南针按钮"><a href="#指南针按钮" class="headerlink" title="指南针按钮"></a>指南针按钮</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UiSettings uiSettings = mMap.getUiSettings();</div><div class="line">uiSettings.setCompassEnabled(true);</div></pre></td></tr></table></figure>
+<h5 id="手势"><a href="#手势" class="headerlink" title="手势"></a>手势</h5><ol>
+<li><p>旋转</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UiSettings uiSettings = mMap.getUiSettings();</div><div class="line">uiSettings.setRotateGesturesEnabled(mRotateGesturesEnabled);</div></pre></td></tr></table></figure>
+</li>
+<li><p>平移</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">UiSettings uiSettings = mMap.getUiSettings();</div><div class="line">uiSettings.setScrollGesturesEnabled(mScrollGesturesEnabled);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="自定义标注"><a href="#自定义标注" class="headerlink" title="自定义标注"></a>自定义标注</h4><h5 id="清除标注"><a href="#清除标注" class="headerlink" title="清除标注"></a>清除标注</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mMap.clear();</div></pre></td></tr></table></figure>
+<h5 id="新增标注"><a href="#新增标注" class="headerlink" title="新增标注"></a>新增标注</h5><p>增加一个标注，只需要把当前的经纬度，图标，标题等信息传入 <em>MarkerOptions</em> ，之后在 <em>addMarker</em> 到 map对象即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">LatLng latLng = new LatLng(latitude, longitude);</div><div class="line"></div><div class="line">//标记当前坐标</div><div class="line">mMap.addMarker(new MarkerOptions()</div><div class="line">        .position(latLng)</div><div class="line">        .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_position_small))</div><div class="line">        .title(getString(R.string.map_camera_center_location)));</div></pre></td></tr></table></figure>
+<h4 id="摄像头"><a href="#摄像头" class="headerlink" title="摄像头"></a>摄像头</h4><h5 id="当前位置"><a href="#当前位置" class="headerlink" title="当前位置"></a>当前位置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//获取当前摄像头中心点的坐标</div><div class="line">double latitude = mMap.getCameraPosition().target.latitude;</div><div class="line">double longitude = mMap.getCameraPosition().target.longitude;</div></pre></td></tr></table></figure>
+<h5 id="移动相关监听"><a href="#移动相关监听" class="headerlink" title="移动相关监听"></a>移动相关监听</h5><ol>
+<li><p>开始监听</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//摄像头开始滑动监听</div><div class="line">mMap.setOnCameraMoveStartedListener(new GoogleMap.OnCameraMoveStartedListener() &#123;</div><div class="line">    @Override</div><div class="line">    public void onCameraMoveStarted(int reason) &#123;</div><div class="line">        if (reason == GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE) &#123;</div><div class="line">            //表示摄像头移动是为了响应用户在地图上做出的手势，如平移、倾斜、通过捏合手指进行缩放或旋转地图</div><div class="line"></div><div class="line">        &#125; else if (reason == GoogleMap.OnCameraMoveStartedListener</div><div class="line">                .REASON_API_ANIMATION) &#123;</div><div class="line">            //表示 API 移动摄像头是为了响应非手势用户操作，如点按 zoom 按钮、点按 My Location 按钮或点击标记</div><div class="line"></div><div class="line">        &#125; else if (reason == GoogleMap.OnCameraMoveStartedListener</div><div class="line">                .REASON_DEVELOPER_ANIMATION) &#123;</div><div class="line">            //表示您的应用已发起摄像头移动</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125; ;</div></pre></td></tr></table></figure>
+</li>
+<li><p>取消</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//摄像头移动停止状态的监听</div><div class="line">mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() &#123;</div><div class="line">    @Override</div><div class="line">    public void onCameraIdle() &#123;</div><div class="line">       </div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>停止</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//摄像头移动中被取消时的监听</div><div class="line">mMap.setOnCameraMoveCanceledListener(new GoogleMap.OnCameraMoveCanceledListener() &#123;</div><div class="line">    @Override</div><div class="line">    public void onCameraMoveCanceled() &#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="点击监听"><a href="#点击监听" class="headerlink" title="点击监听"></a>点击监听</h4><h5 id="点击"><a href="#点击" class="headerlink" title="点击"></a>点击</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//点击地图上某个坐标</div><div class="line">mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() &#123;</div><div class="line">    @Override</div><div class="line">    public void onMapClick(LatLng latLng) &#123;</div><div class="line">        Toast.makeText(MapActivity.this,</div><div class="line">                getString(R.string.map_click_tip, latLng.latitude, latLng.longitude),</div><div class="line">                Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h5 id="长按"><a href="#长按" class="headerlink" title="长按"></a>长按</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//长按地图上某个坐标</div><div class="line">mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() &#123;</div><div class="line">    @Override</div><div class="line">    public void onMapLongClick(LatLng latLng) &#123;</div><div class="line">        Toast.makeText(MapActivity.this,</div><div class="line">                getString(R.string.map_long_click_tip, latLng.latitude, latLng.longitude),</div><div class="line">                Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h5 id="点击景点"><a href="#点击景点" class="headerlink" title="点击景点"></a>点击景点</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//点击地图上某个景点</div><div class="line">mMap.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() &#123;</div><div class="line">    @Override</div><div class="line">    public void onPoiClick(PointOfInterest pointOfInterest) &#123;</div><div class="line">        Toast.makeText(MapActivity.this,</div><div class="line">                getString(R.string.map_place_click_tip, pointOfInterest.name, pointOfInterest.placeId, pointOfInterest.latLng.latitude, pointOfInterest.latLng.longitude),</div><div class="line">                Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="快照"><a href="#快照" class="headerlink" title="快照"></a>快照</h4><p>快照分两种，一种是直接不管地图有没有加载完，就把当前的地图截屏，如果此时地图未加载完，截取的图片会出现模糊的情况；另外一种是判断地图是否在加载中，如果是，则等加载完毕再截图，如果不是，就直接截图。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">//是否等待地图加载完毕</div><div class="line">if (mWaitForMapLoaded) &#123;</div><div class="line">    //获取加载完的高清图片</div><div class="line">    mMap.setOnMapLoadedCallback(new GoogleMap.OnMapLoadedCallback() &#123;</div><div class="line">        @Override</div><div class="line">        public void onMapLoaded() &#123;</div><div class="line">            if (null != mMap) &#123;</div><div class="line">                mMap.snapshot(new GoogleMap.SnapshotReadyCallback() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void onSnapshotReady(Bitmap bitmap) &#123;</div><div class="line">                    	//获取bitmap</div><div class="line">                    	</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125; else &#123;</div><div class="line">    //未加载完，就执行快照功能，会导致截取模糊图片</div><div class="line">    mMap.snapshot(new GoogleMap.SnapshotReadyCallback() &#123;</div><div class="line">        @Override</div><div class="line">        public void onSnapshotReady(Bitmap bitmap) &#123;</div><div class="line">        	//获取bitmap</div><div class="line">        </div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="GoogleApiClient"><a href="#GoogleApiClient" class="headerlink" title="GoogleApiClient"></a>GoogleApiClient</h3><h4 id="前提-1"><a href="#前提-1" class="headerlink" title="前提"></a><span id="GoogleAPiClientBefore">前提</span></h4><ol>
+<li><p>初始化 GoogleApiClient</p>
+<p>在 onCreate 的时候进行初始化操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 初始化 google client 用于获取地点信息</div><div class="line"> */</div><div class="line">private void createGoogleApiClient() &#123;</div><div class="line">    if (mGoogleApiClient == null) &#123;</div><div class="line">        mGoogleApiClient = new GoogleApiClient</div><div class="line">                .Builder(this)</div><div class="line">                .addApi(Places.GEO_DATA_API)</div><div class="line">                .addApi(Places.PLACE_DETECTION_API)</div><div class="line">                .addApi(LocationServices.API)</div><div class="line">                .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void onConnected(@Nullable Bundle bundle) &#123;</div><div class="line">                        //连接成功</div><div class="line">                        mConnected = true;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    @Override</div><div class="line">                    public void onConnectionSuspended(int i) &#123;</div><div class="line">                        //连接暂停</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) &#123;</div><div class="line">                        //连接失败</div><div class="line">                        mConnected = false;</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() &#123;</div><div class="line">                    @Override</div><div class="line">                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) &#123;</div><div class="line">                        //连接失败</div><div class="line">                        mConnected = false;</div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在 onStart() 的时候连接，在 onStop() 的时候，断开连接。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onStart() &#123;</div><div class="line">    super.onStart();</div><div class="line">    if (null != mGoogleApiClient) &#123;</div><div class="line">        mGoogleApiClient.connect();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">@Override</div><div class="line">protected void onStop() &#123;</div><div class="line">    super.onStop();</div><div class="line">    if (null != mGoogleApiClient) &#123;</div><div class="line">        mGoogleApiClient.disconnect();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>使用位置相关 API 的前提，必须确保用户授予位置权限。方法同上的 <em>checkLocationPermission()</em></p>
+</li>
+</ol>
+<h4 id="获取当前定位的经纬度坐标"><a href="#获取当前定位的经纬度坐标" class="headerlink" title="获取当前定位的经纬度坐标"></a>获取当前定位的经纬度坐标</h4><h5 id="科普"><a href="#科普" class="headerlink" title="科普"></a>科普</h5><ul>
+<li><p>WGS-84</p>
+<p>国际标准的坐标系，国际标准的 GPS 设备定位获取的就是这种坐标。简称 <strong>地球坐标系</strong>。</p>
+</li>
+<li><p>GCJ-02</p>
+<p>在我们国家，据说是为了保密，我们不使用 WGS-84 坐标，而是使用经过加密的 GCJ-02，高德地图，谷歌地图（国内板块）都是使用这个坐标系。这个就是俗称的 <strong>火星坐标系</strong>。</p>
+</li>
+<li><p>其他坐标系</p>
+<p>比如百度地图，他用的是他们家的 BD-09 坐标，这个只适用于百度相关产品。搜狗地图也有自己的坐标。</p>
+</li>
+<li><p>格式<br>注意到谷歌地图的坐标是 latitude, longitude 格式，即 纬度，经度 格式。和国内的百度，高德坐标写法是反过来的。国内的一般是 经度，纬度 的方式。</p>
+</li>
+</ul>
+<h5 id="API"><a href="#API" class="headerlink" title="API"></a>API</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);</div><div class="line">if (null != lastLocation) &#123;</div><div class="line">    double latitude = lastLocation.getLatitude();</div><div class="line">    double longitude = lastLocation.getLongitude();</div><div class="line">&#125; else &#123;</div><div class="line">  </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>刚开始我也以为这么简单就可以了，在测试设备上确实可以获取到坐标，但是实际上，大多数情况，在第一次运行定位的时候，获取的 Location 对象是为null。所以还需要注册位置变化的监听。等监听到位置信息后，移除此监听，防止不断监听引起高耗电现象。这部分百度地图用得很方便，他封装好了，但是谷歌地图就要自己实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">private long UPDATE_INTERVAL = 10 * 1000;  /* 10 secs */</div><div class="line">private long FASTEST_INTERVAL = 1500; /* 1.5 sec */</div><div class="line">private final int MAX_TIME = 2; //最多定位次数</div><div class="line">private int time;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">if (null != lastLocation) &#123;</div><div class="line">    //.....</div><div class="line">&#125; else &#123;</div><div class="line">	//如果获取不到位置信息，注册位置变化监听</div><div class="line">	regLocationUpdates();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">private void regLocationUpdates() &#123;</div><div class="line">    if (!checkLocationPermission()) &#123;</div><div class="line">        showContentText(getString(R.string.cilent_permission_failed));</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    LocationRequest locationRequest = LocationRequest.create()</div><div class="line">            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)</div><div class="line">            .setInterval(UPDATE_INTERVAL)</div><div class="line">            .setFastestInterval(FASTEST_INTERVAL);</div><div class="line"></div><div class="line">    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,</div><div class="line">            locationRequest, new LocationListener() &#123;</div><div class="line">                @Override</div><div class="line">                public void onLocationChanged(Location location) &#123;</div><div class="line">                    time++;</div><div class="line"></div><div class="line">                    //如果获取到位置信息，则移除位置变化监听</div><div class="line">                    if (null != location) &#123;</div><div class="line">                        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);</div><div class="line">                        //获取定位的经纬度</div><div class="line">                        double latitude = location.getLatitude();</div><div class="line">                        double longitude = location.getLongitude();</div><div class="line">						return;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    //如果超过最大的定位次数则停止位置变化监听</div><div class="line">                    if (time == MAX_TIME) &#123;</div><div class="line">                        //移除位置变化监听</div><div class="line">                        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);</div><div class="line">						//获取当前位置失败</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在终于获取到定位坐标了，等等，好像不太对，这个坐标和我实际位置好像有不少的偏差…..我打开了 GoogleMap 这个官方的 APP，点击了他的定位。这下就懵逼了，怎么官方的这个是没问题了，误差很小….</p>
+<p>我明明用的是 GoogleMap 的 API，为什么定位会不一样？</p>
+<p>原因在刚才的坐标系里面，谷歌地图的国内板块是用 GCJ-02，但是定位 API 获取的坐标是国际标准坐标 WGS-84，所以需要把 WGS-84 转化 GCJ-02。</p>
+<p>那谷歌地图 APP 上为什么可以呢？</p>
+<p>我猜测，谷歌地图在访问网络的时候，会进行位置判断，如果是国内坐标，就进行转换，国外坐标就不转换。</p>
+<p><strong>WGS-84 转化 GCJ-02 方法</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div></pre></td><td class="code"><pre><div class="line">static double a = 6378245.0;</div><div class="line">static double ee = 0.00669342162296594323;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 把 WGS-84 转换成 GCJ-02</div><div class="line"> * @param wgLoc</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">public static LatLng transformFromWGSToGCJ(LatLng wgLoc) &#123;</div><div class="line"></div><div class="line">    //如果在国外，则默认不进行转换</div><div class="line">    if (outOfChina(wgLoc.latitude, wgLoc.longitude)) &#123;</div><div class="line">        //return new LatLng(wgLoc.latitude, wgLoc.longitude);</div><div class="line">        return wgLoc;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    double dLat = transformLat(wgLoc.longitude - 105.0,</div><div class="line">            wgLoc.latitude - 35.0);</div><div class="line">    double dLon = transformLon(wgLoc.longitude - 105.0,</div><div class="line">            wgLoc.latitude - 35.0);</div><div class="line">    double radLat = wgLoc.latitude / 180.0 * Math.PI;</div><div class="line">    double magic = Math.sin(radLat);</div><div class="line">    magic = 1 - ee * magic * magic;</div><div class="line">    double sqrtMagic = Math.sqrt(magic);</div><div class="line">    dLat = (dLat * 180.0)/ ((a * (1 - ee)) / (magic * sqrtMagic) * Math.PI);</div><div class="line">    dLon = (dLon * 180.0) / (a / sqrtMagic * Math.cos(radLat) * Math.PI);</div><div class="line"></div><div class="line">    return new LatLng(wgLoc.latitude + dLat, wgLoc.longitude + dLon);</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line">private static double transformLat(double x, double y) &#123;</div><div class="line">    double ret = -100.0 + 2.0 * x + 3.0 * y + 0.2 * y * y + 0.1 * x * y</div><div class="line">            + 0.2 * Math.sqrt(x &gt; 0 ? x : -x);</div><div class="line">    ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x</div><div class="line">            * Math.PI)) * 2.0 / 3.0;</div><div class="line">    ret += (20.0 * Math.sin(y * Math.PI) + 40.0 * Math.sin(y / 3.0</div><div class="line">            * Math.PI)) * 2.0 / 3.0;</div><div class="line">    ret += (160.0 * Math.sin(y / 12.0 * Math.PI) + 320 * Math.sin(y</div><div class="line">            * Math.PI / 30.0)) * 2.0 / 3.0;</div><div class="line">    return ret;</div><div class="line">&#125;</div><div class="line"></div><div class="line">private static double transformLon(double x, double y) &#123;</div><div class="line">    double ret = 300.0 + x + 2.0 * y + 0.1 * x * x + 0.1 * x * y + 0.1</div><div class="line">            * Math.sqrt(x &gt; 0 ? x : -x);</div><div class="line">    ret += (20.0 * Math.sin(6.0 * x * Math.PI) + 20.0 * Math.sin(2.0 * x</div><div class="line">            * Math.PI)) * 2.0 / 3.0;</div><div class="line">    ret += (20.0 * Math.sin(x * Math.PI) + 40.0 * Math.sin(x / 3.0</div><div class="line">            * Math.PI)) * 2.0 / 3.0;</div><div class="line">    ret += (150.0 * Math.sin(x / 12.0 * Math.PI) + 300.0 * Math.sin(x</div><div class="line">            / 30.0 * Math.PI)) * 2.0 / 3.0;</div><div class="line">    return ret;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 判断是否在中国以外</div><div class="line"> * @param lat</div><div class="line"> * @param lon</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">public static boolean outOfChina(double lat, double lon) &#123;</div><div class="line">    if (lon &lt; 72.004 || lon &gt; 137.8347)</div><div class="line">        return true;</div><div class="line">    if (lat &lt; 0.8293 || lat &gt; 55.8271)</div><div class="line">        return true;</div><div class="line">    return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="根据经纬度获取附近地点"><a href="#根据经纬度获取附近地点" class="headerlink" title="根据经纬度获取附近地点"></a>根据经纬度获取附近地点</h4><p>通过经纬度获取对应的地理位置信息，这个叫做<strong>反地理编码请求</strong>，以前百度地图有个 API <code>mGeoCoder.reverseGeoCode(mReverseGeoCodeOption);</code>可以直接使用，Google地图也有类似的，只不过在我使用过程中存在 bug。</p>
+<p>心急想马上能用的，可以自己调到 <strong>Web API</strong> 中的 【根据经纬度获取附近地点】章节。</p>
+<p>此处存在的问题：如果坐标切换为国外，就会造成获取数据为null。即使修改地区 mGeocoder = new Geocoder(this, Locale.JAPAN) 也无效。</p>
+<ol>
+<li><p>初始化 <strong>Geocoder</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mGeocoder = new Geocoder(this, Locale.getDefault());</div><div class="line">//设置区域</div><div class="line">//mGeocoder = new Geocoder(this, Locale.JAPAN);</div></pre></td></tr></table></figure>
+</li>
+<li><p>在子线程获取数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">List&lt;Address&gt; addressList =  mGeocoder.getFromLocation(latitude, longitude, maxResult);</div><div class="line">if (null != addressList &amp;&amp; addressList.size() &gt; 0) &#123;</div><div class="line">    //遍历获取附近地点信息</div><div class="line">    for (Address address : addressList) &#123;</div><div class="line">    //省</div><div class="line">    String adminArea = address.getAdminArea();</div><div class="line">    //市</div><div class="line">    String city = address.getLocality();</div><div class="line">    //地址</div><div class="line">    String feature = address.getFeatureName();</div><div class="line">    &#125; </div><div class="line">&#125; else &#123;</div><div class="line">    //获取附近地点失败</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="startActivity方式"><a href="#startActivity方式" class="headerlink" title="startActivity方式"></a>startActivity方式</h3><h4 id="地点搜索"><a href="#地点搜索" class="headerlink" title="地点搜索"></a>地点搜索</h4><ol>
+<li><p>打开 Activity</p>
+<p><code>private static final int REQUEST_CODE_AUTOCOMPLETE = 2;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 打开搜索的 Activity</div><div class="line"> */</div><div class="line">private void openAutocompleteActivity() &#123;</div><div class="line">    try &#123;</div><div class="line">        // MODE_FULLSCREEN 全屏方式启动一个 Activity</div><div class="line">        // MODE_OVERLAY 启动浮在界面上的控件</div><div class="line">        Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)</div><div class="line">                .build(this);</div><div class="line">        startActivityForResult(intent, REQUEST_CODE_AUTOCOMPLETE);</div><div class="line">    &#125; catch (GooglePlayServicesRepairableException e) &#123;</div><div class="line">        GoogleApiAvailability.getInstance().getErrorDialog(this, e.getConnectionStatusCode(), 0).show();</div><div class="line">    &#125; catch (GooglePlayServicesNotAvailableException e) &#123;</div><div class="line">        String message = &quot;Google Play Services is not available: &quot; +</div><div class="line">                GoogleApiAvailability.getInstance().getErrorString(e.errorCode);</div><div class="line">        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在 <em>onActivityResult</em> 回调中获取搜索的地点信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">    protected void onActivityResult(int requestCode, int resultCode, Intent data) &#123;</div><div class="line"> 		if (requestCode == REQUEST_CODE_AUTOCOMPLETE) &#123;</div><div class="line">            if (resultCode == RESULT_OK) &#123;</div><div class="line">                Place place = PlaceAutocomplete.getPlace(this, data);</div><div class="line">                String placeText = null;</div><div class="line">                if (null != place) &#123;</div><div class="line">                    placeText = &quot;place.getId() = &quot; + place.getId()</div><div class="line">                              + &quot;\nplace.getName() = &quot; + place.getName()</div><div class="line">                              + &quot;\nplace.getLatLng().latitude = &quot; + place.getLatLng().latitude</div><div class="line">                              + &quot;\nplace.getLatLng().longitude = &quot; + place.getLatLng().longitude</div><div class="line">                              + &quot;\nplace.getAddress() = &quot; +place.getAddress()</div><div class="line">                              + &quot;\nplace.getPhoneNumber() = &quot; + place.getPhoneNumber()</div><div class="line">                              + &quot;\nplace.getLocale() = &quot; + place.getLocale()</div><div class="line">                              + &quot;\n.......&quot;;</div><div class="line">                &#125;</div><div class="line">        </div><div class="line">                Toast.makeText(this, getString(R.string.start_by_activity_btn_search_place_result, placeText), Toast.LENGTH_LONG).show();</div><div class="line">            &#125; else if (resultCode == PlaceAutocomplete.RESULT_ERROR) &#123;</div><div class="line">            	//错误码</div><div class="line">                Status status = PlaceAutocomplete.getStatus(this, data);</div><div class="line">            &#125; else if (resultCode == RESULT_CANCELED) &#123;</div><div class="line">            	//取消</div><div class="line">            &#125;</div><div class="line">        &#125; </div><div class="line"> </div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="导航"><a href="#导航" class="headerlink" title="导航"></a>导航</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 开启导航</div><div class="line"> * @param latitude</div><div class="line"> * @param longitude</div><div class="line"> */</div><div class="line">private void startNavigation(double latitude, double longitude) &#123;</div><div class="line">    try &#123;</div><div class="line">        Uri gmmIntentUri = Uri.parse(&quot;google.navigation:q=&quot;+latitude+&quot;,&quot;+longitude+&quot;&amp;mode=d&quot;);</div><div class="line">        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);</div><div class="line">        mapIntent.setPackage(&quot;com.google.android.apps.maps&quot;);</div><div class="line">        startActivity(mapIntent);</div><div class="line">    &#125; catch (Exception e) &#123;</div><div class="line">        //提示未安装google map</div><div class="line">       	</div><div class="line">        //开启google map下载界面</div><div class="line">        showGoogleMapDownloadView();</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 开启google map下载界面</div><div class="line"> */</div><div class="line">private void showGoogleMapDownloadView() &#123;</div><div class="line">    Uri uri = Uri.parse(&quot;market://details?id=com.google.android.apps.maps&quot;);</div><div class="line">    Intent intent = new Intent(Intent.ACTION_VIEW, uri);</div><div class="line">    this.startActivity(intent);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="附近地点"><a href="#附近地点" class="headerlink" title="附近地点"></a>附近地点</h4><ol>
+<li><p>获取定位权限</p>
+<p>获取方法和前面一样，使用 <em>checkLocationPermission()</em></p>
+</li>
+<li><p>打开 Activity，开启附近地点选择</p>
+<p><code>private static final int PLACE_PICKER_REQUEST = 3;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();</div><div class="line">try &#123;</div><div class="line">    startActivityForResult(builder.build(this), PLACE_PICKER_REQUEST);</div><div class="line">&#125; catch (GooglePlayServicesRepairableException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125; catch (GooglePlayServicesNotAvailableException e) &#123;</div><div class="line">    e.printStackTrace();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在 onActivityResult 获取选择的地点信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void onActivityResult(int requestCode, int resultCode, Intent data) &#123;</div><div class="line">  if (requestCode == PLACE_PICKER_REQUEST) &#123;</div><div class="line">      if (resultCode == RESULT_OK) &#123;</div><div class="line">          Place place = PlacePicker.getPlace(this, data);</div><div class="line">          //place.getName() .... </div><div class="line">      &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="Places"><a href="#Places" class="headerlink" title="Places"></a>Places</h2><h3 id="当前位置及附近地点"><a href="#当前位置及附近地点" class="headerlink" title="当前位置及附近地点"></a>当前位置及附近地点</h3><h4 id="前提-2"><a href="#前提-2" class="headerlink" title="前提"></a><a href="#GoogleAPiClientBefore">前提</a></h4><h4 id="API-1"><a href="#API-1" class="headerlink" title="API"></a>API</h4><p><code>private final int mMaxEntries = 5;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 获取当前位置及附近地点</div><div class="line"> */</div><div class="line">private void getCurrentPlaces()&#123;</div><div class="line">    if (!mConnected) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    if (!checkLocationPermission()) &#123;</div><div class="line">    	//未授权定位</div><div class="line">    	return;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    PendingResult&lt;PlaceLikelihoodBuffer&gt; result = Places.PlaceDetectionApi</div><div class="line">            .getCurrentPlace(mGoogleApiClient, null);</div><div class="line">    result.setResultCallback(new ResultCallback&lt;PlaceLikelihoodBuffer&gt;() &#123;</div><div class="line">        @Override</div><div class="line">        public void onResult(@NonNull PlaceLikelihoodBuffer likelyPlaces) &#123;</div><div class="line">            int i = 0;</div><div class="line">            String[] likelyPlaceNames = new String[mMaxEntries];</div><div class="line">            String[] likelyPlaceAddresses = new String[mMaxEntries];</div><div class="line">            String[] likelyPlaceAttributions = new String[mMaxEntries];</div><div class="line">            LatLng[] likelyPlaceLatLngs = new LatLng[mMaxEntries];</div><div class="line">            for (PlaceLikelihood placeLikelihood : likelyPlaces) &#123;</div><div class="line">                // Build a list of likely places to show the user. Max 5.</div><div class="line">                likelyPlaceNames[i] = (String) placeLikelihood.getPlace().getName();</div><div class="line">                likelyPlaceAddresses[i] = (String) placeLikelihood.getPlace().getAddress();</div><div class="line">                likelyPlaceAttributions[i] = (String) placeLikelihood.getPlace()</div><div class="line">                        .getAttributions();</div><div class="line">                likelyPlaceLatLngs[i] = placeLikelihood.getPlace().getLatLng();</div><div class="line"></div><div class="line">                i++;</div><div class="line"></div><div class="line">                //String placeId = (String) placeLikelihood.getPlace().getId();</div><div class="line"></div><div class="line">                if (i &gt; (mMaxEntries - 1)) &#123;</div><div class="line">                    break;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            likelyPlaces.release();</div><div class="line"></div><div class="line">            StringBuilder builder = new StringBuilder();</div><div class="line">            for (String placeName : likelyPlaceNames) &#123;</div><div class="line">                builder.append(placeName + &quot;\n&quot;);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            //显示地点列表</div><div class="line">            //builder.toString()</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="根据-PlaceID-获取对应地点"><a href="#根据-PlaceID-获取对应地点" class="headerlink" title="根据 PlaceID 获取对应地点"></a>根据 PlaceID 获取对应地点</h3><p>在 <em>onResult</em> 返回的 places 一般只有一个，所以取第一个元素，就是 id 对应的地点信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 通过placeId获取对应的位置信息</div><div class="line"> * @param placeId</div><div class="line"> */</div><div class="line">private  void getPlaceById(String placeId)&#123;</div><div class="line">    if (TextUtils.isEmpty(placeId)) &#123;</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId)</div><div class="line">            .setResultCallback(new ResultCallback&lt;PlaceBuffer&gt;() &#123;</div><div class="line">                @Override</div><div class="line">                public void onResult(PlaceBuffer places) &#123;</div><div class="line">                    if (places.getStatus().isSuccess() &amp;&amp; places.getCount() &gt; 0) &#123;</div><div class="line">                        Place myPlace = places.get(0);</div><div class="line">                        //获取id对应的Place</div><div class="line">                    &#125; else &#123;</div><div class="line">                        //没有获取到数据</div><div class="line">                    &#125;</div><div class="line">                    places.release();</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Web-API"><a href="#Web-API" class="headerlink" title="Web API"></a>Web API</h2><p>这里说的 Web API 是指：通过拼接 url 的方式，向 Google 服务器请求数据，服务器会返回一段 JSON，我们本地再用 fastjson 解析，获取对应的数据。</p>
+<h3 id="根据坐标获取所在城市"><a href="#根据坐标获取所在城市" class="headerlink" title="根据坐标获取所在城市"></a>根据坐标获取所在城市</h3><p>这里的 URL 可以这样拼接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">private static final String GOOGLE_MAP_URL = &quot;https://maps.google.com/maps/api/geocode/json?language=%1$s&amp;sensor=true&amp;latlng=%2$s,%3$s&quot;;</div></pre></td></tr></table></figure></p>
+<p>其中 <em>%1$s</em> 对应的是语言，比如我要返回的是中文，那么对于的就是 <em>zh-CN</em>，<em>%2$s %3$s</em> 对应的就是纬度和经度。</p>
+<p><code>private static final String DEFAULT_LANGUAGE = &quot;zh-CN&quot;;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 拼接url(默认设置语言为中文)</div><div class="line"> *</div><div class="line"> * @param latitude</div><div class="line"> * @param longitude</div><div class="line"> */</div><div class="line">public static String getGoogleMapUrl(double latitude, double longitude) &#123;</div><div class="line">    return String.format(GOOGLE_MAP_URL, DEFAULT_LANGUAGE, Double.valueOf(latitude), Double.valueOf(longitude));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，外面只需要直接调这个方法，参数传入纬度、经度，就会返回拼接好的 URL。</p>
+<p>获取了 URL，我们就可以异步访问网络，去获取数据了。这里主要讲下思路，详细代码，可以自己查看 <a href="https://github.com/ansuote/GoogleMapDemo" target="_blank" rel="external">Demo</a>。</p>
+<p>以Demo为例，拼接的URL为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https://maps.google.com/maps/api/geocode/json?language=zh-CN&amp;sensor=true&amp;latlng=22.536817569098282,113.97451490163802</div></pre></td></tr></table></figure>
+<p>获取的 JSON 如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;results&quot;: [</div><div class="line">        &#123;</div><div class="line">            &quot;address_components&quot;: [</div><div class="line">                &#123;</div><div class="line">                    &quot;long_name&quot;: &quot;9028&quot;,</div><div class="line">                    &quot;short_name&quot;: &quot;9028&quot;,</div><div class="line">                    &quot;types&quot;: [</div><div class="line">                        &quot;street_number&quot;</div><div class="line">                    ]</div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    &quot;long_name&quot;: &quot;深南大道&quot;,</div><div class="line">                    &quot;short_name&quot;: &quot;深南大道&quot;,</div><div class="line">                    &quot;types&quot;: [</div><div class="line">                        &quot;route&quot;</div><div class="line">                    ]</div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    &quot;long_name&quot;: &quot;华侨城&quot;,</div><div class="line">                    &quot;short_name&quot;: &quot;华侨城&quot;,</div><div class="line">                    &quot;types&quot;: [</div><div class="line">                        &quot;neighborhood&quot;,</div><div class="line">                        &quot;political&quot;</div><div class="line">                    ]</div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    &quot;long_name&quot;: &quot;南山区&quot;,</div><div class="line">                    &quot;short_name&quot;: &quot;南山区&quot;,</div><div class="line">                    &quot;types&quot;: [</div><div class="line">                        &quot;political&quot;,</div><div class="line">                        &quot;sublocality&quot;,</div><div class="line">                        &quot;sublocality_level_1&quot;</div><div class="line">                    ]</div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    &quot;long_name&quot;: &quot;深圳市&quot;,</div><div class="line">                    &quot;short_name&quot;: &quot;深圳市&quot;,</div><div class="line">                    &quot;types&quot;: [</div><div class="line">                        &quot;locality&quot;,</div><div class="line">                        &quot;political&quot;</div><div class="line">                    ]</div><div class="line">                &#125;,</div><div class="line">                &#123;</div><div class="line">                    &quot;long_name&quot;: &quot;广东省&quot;,</div><div class="line">                    &quot;short_name&quot;: &quot;广东省&quot;,</div><div class="line">                    &quot;types&quot;: [</div><div class="line">                        &quot;administrative_area_level_1&quot;,</div><div class="line">                        &quot;political&quot;</div><div class="line">                    ]</div><div class="line">                &#125;,</div><div class="line">                /**</div><div class="line">                 * 篇幅原因，省略其余数据</div><div class="line">                 */</div><div class="line">    &quot;status&quot;: &quot;OK&quot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中 type 对应的值是 <strong>locality</strong> 的就是<strong>城市名字</strong>，<strong>political</strong> 代表<strong>政治实体</strong>。</p>
+<p>关键代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 根据经纬度获取对应的城市</div><div class="line"> * @param latitude</div><div class="line"> * @param longitude</div><div class="line"> */</div><div class="line">private void getCityByLatlngWeb(double latitude, double longitude) &#123;</div><div class="line">    String urlString = GoogleMapUrlUtil.getGoogleMapUrl(latitude, longitude);</div><div class="line">    if (URLUtil.isNetworkUrl(urlString)) &#123;</div><div class="line">        new GeocodeTask().execute(urlString);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">class GeocodeTask extends AsyncTask&lt;String, Void, JSONObject&gt; &#123;</div><div class="line">    @Override</div><div class="line">    protected void onPreExecute() &#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected com.alibaba.fastjson.JSONObject doInBackground(String... params) &#123;</div><div class="line">    	//请求网络，并且转化为 JSONObject 对象</div><div class="line">        return GoogleMapUrlUtil.returnResult(HttpUtils.doGet(params[0]));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onPostExecute(com.alibaba.fastjson.JSONObject result) &#123;</div><div class="line">        if (null != result) &#123;</div><div class="line">            JSONArray jsonArray = result.getJSONArray(&quot;results&quot;);</div><div class="line">            if (null != jsonArray) &#123;</div><div class="line">                Object firstObj = jsonArray.get(0);</div><div class="line">                if (null != firstObj) &#123;</div><div class="line">                    GeocodeBean bean = JSON.parseObject(firstObj.toString(), GeocodeBean.class);</div><div class="line">                    //获取所在城市</div><div class="line">                    String city = getLocality(bean);</div><div class="line">                    </div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class GeocodeBean &#123;</div><div class="line">    private List&lt;AddressComponent&gt; address_components;</div><div class="line">    private String formatted_address;</div><div class="line">    //geometry</div><div class="line">    private String place_id;</div><div class="line">    private List&lt;String&gt; types;</div><div class="line"> </div><div class="line"> 	//set, get 方法自己补充哈</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 从数据集里面获取所在城市</div><div class="line"> * @param bean</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">private String getLocality(GeocodeBean bean) &#123;</div><div class="line">    boolean isFound = false;</div><div class="line">    if (null != bean) &#123;</div><div class="line">        List&lt;AddressComponent&gt; list = bean.getAddress_components();</div><div class="line">        if (null != list) &#123;</div><div class="line">            for (AddressComponent address : list) &#123;</div><div class="line">                List&lt;String&gt; types = address.getTypes();</div><div class="line">                for (String type : types) &#123;</div><div class="line">                    if (&quot;locality&quot;.equals(type)) &#123;</div><div class="line">                        isFound = true;</div><div class="line">                        break;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                if (isFound) &#123;</div><div class="line">                    return address.getShort_name();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="根据经纬度获取附近地点-1"><a href="#根据经纬度获取附近地点-1" class="headerlink" title="根据经纬度获取附近地点"></a>根据经纬度获取附近地点</h3><p>前面获取对应城市中用的 URL 很方便，基本上没有限制。但是获取附近地点的就没这么好了，在拼接 URL 的时候，需要加上谷歌授权给你的那个 key。这个是官方推荐的做法，详情可以查看<a href="https://developers.google.com/maps/documentation/geocoding/intro" target="_blank" rel="external">官网的介绍</a>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">private static final String GOOGLE_MAP_PLACES_URL = &quot;https://maps.googleapis.com/maps/api/place/nearbysearch/json?language=%1$s&amp;location=%2$s,%3$s&amp;radius=%4$s&amp;type=%5$s&amp;key=%6$s&quot;;</div></pre></td></tr></table></figure></p>
+<p>这下参数有点多了哈，前面3个和之前一样，分别对应语言、纬度、经度。第四个参数是查询地点的半径多大，第五个是类型，这里我使用的是 <strong>point_of_interest</strong> 意思是<strong>已经命名的景点</strong>，<a href="https://developers.google.com/maps/documentation/geocoding/intro#Types" target="_blank" rel="external">其他类型可以查看官网</a>，最后一个参数是你的 APP 申请的 Key值。</p>
+<p>关键代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 获取经纬度对应的附近地点</div><div class="line"> * @param latitude</div><div class="line"> * @param longitude</div><div class="line"> */</div><div class="line">private void getPlacesByLatLngWeb(double latitude, double longitude) &#123;</div><div class="line">    String url = GoogleMapUrlUtil.getGoogleMapPlacesUrl(latitude, longitude);</div><div class="line">    if (URLUtil.isNetworkUrl(url)) &#123;</div><div class="line">        new NearbyPlacesTask().execute(url);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class NearbyPlacesTask extends AsyncTask&lt;String, Void, JSONObject&gt; &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected JSONObject doInBackground(String... params) &#123;</div><div class="line">        return GoogleMapUrlUtil.returnResult(HttpUtils.doGet(params[0]));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onPostExecute(JSONObject result) &#123;</div><div class="line">        if (null != result) &#123;</div><div class="line">            JSONArray jsonArray = result.getJSONArray(&quot;results&quot;);</div><div class="line">            if (null != jsonArray) &#123;</div><div class="line">                List&lt;NearbyPlaceBean&gt; list = JSON.parseArray(jsonArray.toString(), NearbyPlaceBean.class);</div><div class="line">                //遍历 list 可以获取对应的附近地点信息</div><div class="line">                //list的size能比较大，可以根据项目需求，指截取前面10个。</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">public class NearbyPlaceBean &#123;</div><div class="line">    //geometry</div><div class="line">    //icon</div><div class="line">    private String id;      //1f7541b5f729cdc8bc8bb546f205848c50315af7</div><div class="line">    private String name;    //澎柏白金假日公寓</div><div class="line">    //photos</div><div class="line">    private String place_id;    //ChIJX9_kRAXsAzQRKmc97njB67c</div><div class="line">    //reference</div><div class="line">    //scope</div><div class="line">    //types</div><div class="line">    private String vicinity;    //深圳市宝安区</div><div class="line"></div><div class="line">    private GeometryBean geometry;</div><div class="line">    </div><div class="line">    //set，get 自己补充哈</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="实战：附近地点推荐"><a href="#实战：附近地点推荐" class="headerlink" title="实战：附近地点推荐"></a>实战：附近地点推荐</h2><p>可以像上面那样使用 Activity 的方式，弹出 Google 自带的地点推荐／选取界面，但是这样的UI定制性低，不能按照项目需求显示界面。所以根据上面学习到的东西，我重新写了个类似的界面，实现地点推荐、搜索、选择和截图功能的功能。考虑到频繁调接口会损耗请求次数，所以我设置了个半径，超过半径的才重新请求数据。<a href="https://github.com/ansuote/WebViewDemo" target="_blank" rel="external">代码在原来的Demo里</a>。</p>
+<p><img src="http://op6c410ta.bkt.clouddn.com/googlemap-custom.gif" alt=""></p>
+<h2 id="限制／收费"><a href="#限制／收费" class="headerlink" title="限制／收费"></a>限制／收费</h2><p>前面我把类型分为 Map，Places主要原因就是，他们的收费标准是不同的。<a href="https://developers.google.com/maps/pricing-and-plans/#details" target="_blank" rel="external">详情可见</a></p>
+<table>
+<thead>
+<tr>
+<th>Android</th>
+<th>标准方案</th>
+<th>高级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google Maps Android API</td>
+<td>不受限制地免费使用。<a href="https://developers.google.com/maps/pricing-and-plans/#sup_1" target="_blank" rel="external">1</a></td>
+<td>定价基于所需数量。如需了解详细信息，请参阅<a href="https://developers.google.com/maps/premium/usage-limits" target="_blank" rel="external">Premium Plan使用率和限制</a>。</td>
+</tr>
+<tr>
+<td>Google Places API for Android</td>
+<td>默认每天 1,000 次免费请求，<a href="https://developers.google.com/places/android-api/usage#query-limits" target="_blank" rel="external">信用卡验证</a>后可增至每天 150,000 次免费请求。符合要求的应用可免费提升。<a href="https://developers.google.com/places/android-api/usage" target="_blank" rel="external">详情</a></td>
+<td>—-</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Web 服务</th>
+<th>标准</th>
+<th>高级</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google Places API Web Service</td>
+<td>每天 150,000 次免费请求（<a href="https://developers.google.com/places/web-service/usage" target="_blank" rel="external">信用卡验证</a>后）。</td>
+<td>定价基于所需数量。如需了解详细信息，请参阅<a href="https://developers.google.com/maps/premium/usage-limits" target="_blank" rel="external">Premium Plan使用率和限制</a>。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><h3 id="官方-Demo"><a href="#官方-Demo" class="headerlink" title="官方 Demo"></a>官方 Demo</h3><p>官方 Demo 要跑起来，必须像前面的方式一样，去申请对应的 Key。</p>
+<h4 id="android-samples-apiDemos"><a href="#android-samples-apiDemos" class="headerlink" title="android-samples-apiDemos"></a><a href="https://github.com/googlemaps/android-samples/tree/master/ApiDemos" target="_blank" rel="external">android-samples-apiDemos</a></h4><p>介绍 Map 相关 API。</p>
+<h4 id="android-play-places"><a href="#android-play-places" class="headerlink" title="android-play-places"></a><a href="https://github.com/googlesamples/android-play-places/" target="_blank" rel="external">android-play-places</a></h4><p>介绍 Places 相关 API 。包括地点搜索，附近地点选择，地点补全等。</p>
+<h4 id="android-maps-utils"><a href="#android-maps-utils" class="headerlink" title="android-maps-utils"></a><a href="https://github.com/googlemaps/android-maps-utils" target="_blank" rel="external">android-maps-utils</a></h4><p><strong>点聚合 Clustering </strong> 可以通过这个 demo 学习，GoogleMap的点聚合和百度是一样的用法，外层代码基本上是一样的。</p>
+<h3 id="工具类网页"><a href="#工具类网页" class="headerlink" title="工具类网页"></a>工具类网页</h3><ol>
+<li><a href="https://console.developers.google.com/apis/credentials?project=savvy-generator-167702" target="_blank" rel="external">API Console</a> （Key 管理控制台）</li>
+<li><a href="https://developers.google.com/android/reference/com/google/android/gms/maps/package-summary" target="_blank" rel="external">Google Map API 查询</a></li>
+<li>坐标反查 (通过经纬度查对应地点)<br><a href="https://www.google.com/maps" target="_blank" rel="external">GoogleMap</a><br>(谷歌地图直接把经纬度输入输入框即可查询，例如输入：22.536817569098282,113.97451490163802 )<br> <a href="http://lbs.amap.com/console/show/picker" target="_blank" rel="external">高德地图</a><br> <a href="http://api.map.baidu.com/lbsapi/getpoint/" target="_blank" rel="external">百度地图</a></li>
+</ol>
+<p>相关参考<br>[1]<a href="https://developers.google.com/maps/documentation/android-api/" target="_blank" rel="external">官方 Map 教程</a><br>[2]<a href="https://developers.google.com/places/android-api/" target="_blank" rel="external">官方 Places 教程</a><br>[3]<a href="https://developers.google.com/maps/documentation/android-api/intents" target="_blank" rel="external">启动 GoogleMap </a><br>[4]<a href="http://blog.csdn.net/qwer4755552/article/details/51659833" target="_blank" rel="external">Android使用intent调取导航或者地图</a><br>[5]<a href="http://blog.csdn.net/sanjay_f/article/details/48493699" target="_blank" rel="external">关于地图和偏移的那些事</a><br>[6]<a href="http://www.eoeandroid.com/forum.php?mod=viewthread&amp;tid=332419" target="_blank" rel="external">地图坐标转换大全</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/ansuote_alipay.png" alt="ansuote WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/ansuote_wechatpay.png" alt="ansuote Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/21/Android 开发总结（思维导图）/" rel="prev" title="Android 开发总结（思维导图）">
+                Android 开发总结（思维导图） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODU1Mi81MTIz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="ansuote" />
+          <p class="site-author-name" itemprop="name">ansuote</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题外话"><span class="nav-number">1.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特别注意："><span class="nav-number">2.1.</span> <span class="nav-text">特别注意：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#前期准备"><span class="nav-number">3.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#网络"><span class="nav-number">3.1.</span> <span class="nav-text">网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设备"><span class="nav-number">3.2.</span> <span class="nav-text">设备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#谷歌账号"><span class="nav-number">3.3.</span> <span class="nav-text">谷歌账号</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map"><span class="nav-number">4.</span> <span class="nav-text">Map</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map-相关"><span class="nav-number">4.1.</span> <span class="nav-text">Map 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前提"><span class="nav-number">4.1.1.</span> <span class="nav-text">前提</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#初始化-Google-Map"><span class="nav-number">4.1.1.1.</span> <span class="nav-text">初始化 Google Map</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#布局"><span class="nav-number">4.1.1.1.1.</span> <span class="nav-text">布局</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Activity"><span class="nav-number">4.1.1.1.2.</span> <span class="nav-text">Activity</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#确保-GoogleMap-实例化"><span class="nav-number">4.1.1.2.</span> <span class="nav-text">确保 GoogleMap 实例化</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开关类"><span class="nav-number">4.1.2.</span> <span class="nav-text">开关类</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定位按钮"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">定位按钮</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#放大／缩小按钮"><span class="nav-number">4.1.2.2.</span> <span class="nav-text">放大／缩小按钮</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#指南针按钮"><span class="nav-number">4.1.2.3.</span> <span class="nav-text">指南针按钮</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#手势"><span class="nav-number">4.1.2.4.</span> <span class="nav-text">手势</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义标注"><span class="nav-number">4.1.3.</span> <span class="nav-text">自定义标注</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#清除标注"><span class="nav-number">4.1.3.1.</span> <span class="nav-text">清除标注</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#新增标注"><span class="nav-number">4.1.3.2.</span> <span class="nav-text">新增标注</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#摄像头"><span class="nav-number">4.1.4.</span> <span class="nav-text">摄像头</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#当前位置"><span class="nav-number">4.1.4.1.</span> <span class="nav-text">当前位置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#移动相关监听"><span class="nav-number">4.1.4.2.</span> <span class="nav-text">移动相关监听</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#点击监听"><span class="nav-number">4.1.5.</span> <span class="nav-text">点击监听</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#点击"><span class="nav-number">4.1.5.1.</span> <span class="nav-text">点击</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#长按"><span class="nav-number">4.1.5.2.</span> <span class="nav-text">长按</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#点击景点"><span class="nav-number">4.1.5.3.</span> <span class="nav-text">点击景点</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#快照"><span class="nav-number">4.1.6.</span> <span class="nav-text">快照</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GoogleApiClient"><span class="nav-number">4.2.</span> <span class="nav-text">GoogleApiClient</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前提-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取当前定位的经纬度坐标"><span class="nav-number">4.2.2.</span> <span class="nav-text">获取当前定位的经纬度坐标</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#科普"><span class="nav-number">4.2.2.1.</span> <span class="nav-text">科普</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#API"><span class="nav-number">4.2.2.2.</span> <span class="nav-text">API</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#根据经纬度获取附近地点"><span class="nav-number">4.2.3.</span> <span class="nav-text">根据经纬度获取附近地点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#startActivity方式"><span class="nav-number">4.3.</span> <span class="nav-text">startActivity方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#地点搜索"><span class="nav-number">4.3.1.</span> <span class="nav-text">地点搜索</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导航"><span class="nav-number">4.3.2.</span> <span class="nav-text">导航</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附近地点"><span class="nav-number">4.3.3.</span> <span class="nav-text">附近地点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Places"><span class="nav-number">5.</span> <span class="nav-text">Places</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#当前位置及附近地点"><span class="nav-number">5.1.</span> <span class="nav-text">当前位置及附近地点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前提-2"><span class="nav-number">5.1.1.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#API-1"><span class="nav-number">5.1.2.</span> <span class="nav-text">API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据-PlaceID-获取对应地点"><span class="nav-number">5.2.</span> <span class="nav-text">根据 PlaceID 获取对应地点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Web-API"><span class="nav-number">6.</span> <span class="nav-text">Web API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#根据坐标获取所在城市"><span class="nav-number">6.1.</span> <span class="nav-text">根据坐标获取所在城市</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#根据经纬度获取附近地点-1"><span class="nav-number">6.2.</span> <span class="nav-text">根据经纬度获取附近地点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实战：附近地点推荐"><span class="nav-number">7.</span> <span class="nav-text">实战：附近地点推荐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#限制／收费"><span class="nav-number">8.</span> <span class="nav-text">限制／收费</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习资料"><span class="nav-number">9.</span> <span class="nav-text">学习资料</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#官方-Demo"><span class="nav-number">9.1.</span> <span class="nav-text">官方 Demo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#android-samples-apiDemos"><span class="nav-number">9.1.1.</span> <span class="nav-text">android-samples-apiDemos</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#android-play-places"><span class="nav-number">9.1.2.</span> <span class="nav-text">android-play-places</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#android-maps-utils"><span class="nav-number">9.1.3.</span> <span class="nav-text">android-maps-utils</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工具类网页"><span class="nav-number">9.2.</span> <span class="nav-text">工具类网页</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ansuote</span>
+</div>
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
