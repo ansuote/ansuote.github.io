@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/webview_video_page_normal.png">
 <meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/webview_video_chrome_choose.png">
 <meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/webview_ssl.png">
-<meta property="og:updated_time" content="2017-07-06T03:22:53.000Z">
+<meta property="og:updated_time" content="2017-07-06T03:26:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebView 腾讯视频全屏播放">
 <meta name="twitter:description" content="概述本文讲述的是，通过 WebView加载带有视频的网页，实现点击网页上的全屏按钮，实现视频横屏、全屏播放的功能。具体代码可见Demo ，展现的有腾讯视频，Bilibili视频，土豆视频。 需求最近有个需求，加载一个腾讯视频的网页，用户点击网页上的全屏按钮，就能实现设备横屏，全屏播放。 前提设置属性 在 AndroidManifest 声明网络权限 &amp;lt;uses-permission andr">
@@ -445,7 +445,7 @@
 <p><code>private boolean mIgnoreSslError;  //是否忽略ssl证书错误</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private class CustomWebClient extends WebViewClient &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) &#123;</div><div class="line">        if (mIgnoreSslError) &#123;</div><div class="line">            // let&apos;s ignore ssl error</div><div class="line">            handler.proceed();</div><div class="line">        &#125; else &#123;</div><div class="line">        	 super.onReceivedSslError(view, handler, error);</div><div class="line">        	//不忽略，显示自定义错误界面</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    //....</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>可以使用 <strong>handler.proceed()</strong> 忽略 SSL 错误，让 WebView 继续加载这个网页，但是强制加载不一定成功，<em>而且这种加载方式是不安全的，GooglePlay 上架很可能是不能通过安全验证</em>。另外一种处理方法是，让 WebView 执行原本逻辑（停止加载），此时显示自定义的提示界面。</p>
 <blockquote>
-<p>相关参考<br>[1]<a href="https://segmentfault.com/a/1190000007561455" target="_blank" rel="external">WebView实现全屏播放的一种方法</a><br>[2]<a href="http://www.jianshu.com/p/4aed5c1230dc" target="_blank" rel="external">WebView中的视频全屏4种方法，特别是腾讯视频，真正解决全屏问题</a><br>[3]<a href="http://www.jianshu.com/p/c2412918b2b5" target="_blank" rel="external">android内存优化之webview</a></p>
+<p>相关参考<br>[1]<a href="https://segmentfault.com/a/1190000007561455" target="_blank" rel="external">WebView实现全屏播放的一种方法</a><br>[2]<a href="http://www.jianshu.com/p/4aed5c1230dc" target="_blank" rel="external">WebView中的视频全屏4种方法，特别是腾讯视频，真正解决全屏问题</a><br>[3]<a href="http://www.jianshu.com/p/c2412918b2b5" target="_blank" rel="external">android内存优化之webview</a><br>[4]<a href="https://stackoverflow.com/questions/36050741/webview-avoid-security-alert-from-google-play-upon-implementation-of-onreceiveds" target="_blank" rel="external">Webview avoid security alert from google play upon implementation of onReceivedSslError</a></p>
 </blockquote>
 
       
