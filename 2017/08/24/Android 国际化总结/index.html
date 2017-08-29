@@ -1,0 +1,854 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="题外话我们经常看微信公众号的文章，手机看挺方便，但是电脑上要搜索，要看某一篇就比较费劲了。电脑上，我使用10条和传送门 看的。一般收录的是一些比较热门的账号文章，有其他好的方式，欢迎推荐哈。 概述本篇对近期 Android 海外版项目用到的国际化知识做了些总结。不对之处，欢迎指正哈。如若转载，请注明出处。 Hade Code硬编码提取部分，QQ音乐技术团队的这篇文章已经讲得非常详细了，我就不重复造">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 国际化总结">
+<meta property="og:url" content="http://yoursite.com/2017/08/24/Android 国际化总结/index.html">
+<meta property="og:site_name" content="ansuote">
+<meta property="og:description" content="题外话我们经常看微信公众号的文章，手机看挺方便，但是电脑上要搜索，要看某一篇就比较费劲了。电脑上，我使用10条和传送门 看的。一般收录的是一些比较热门的账号文章，有其他好的方式，欢迎推荐哈。 概述本篇对近期 Android 海外版项目用到的国际化知识做了些总结。不对之处，欢迎指正哈。如若转载，请注明出处。 Hade Code硬编码提取部分，QQ音乐技术团队的这篇文章已经讲得非常详细了，我就不重复造">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/Open_translate_Editor_01.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/Open_translate_Editor_02.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/select_country.jpg">
+<meta property="og:updated_time" content="2017-08-29T16:45:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 国际化总结">
+<meta name="twitter:description" content="题外话我们经常看微信公众号的文章，手机看挺方便，但是电脑上要搜索，要看某一篇就比较费劲了。电脑上，我使用10条和传送门 看的。一般收录的是一些比较热门的账号文章，有其他好的方式，欢迎推荐哈。 概述本篇对近期 Android 海外版项目用到的国际化知识做了些总结。不对之处，欢迎指正哈。如若转载，请注明出处。 Hade Code硬编码提取部分，QQ音乐技术团队的这篇文章已经讲得非常详细了，我就不重复造">
+<meta name="twitter:image" content="http://op6c410ta.bkt.clouddn.com/Open_translate_Editor_01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/24/Android 国际化总结/"/>
+
+
+
+
+
+  <title> Android 国际化总结 | ansuote </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bbd092b8b5c9a9e3648742e5b07aa693";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ansuote</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/24/Android 国际化总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ansuote">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ansuote">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 国际化总结
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-24T17:16:39+08:00">
+                2017-08-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>我们经常看微信公众号的文章，手机看挺方便，但是电脑上要搜索，要看某一篇就比较费劲了。电脑上，我使用<a href="http://www.10tiao.com/" target="_blank" rel="external">10条</a>和<a href="http://chuansong.me/" target="_blank" rel="external">传送门</a> 看的。一般收录的是一些比较热门的账号文章，有其他好的方式，欢迎推荐哈。</p>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>本篇对近期 Android 海外版项目用到的国际化知识做了些总结。不对之处，欢迎指正哈。如若转载，请注明出处。</p>
+<h2 id="Hade-Code"><a href="#Hade-Code" class="headerlink" title="Hade Code"></a>Hade Code</h2><p>硬编码提取部分，<a href="https://mp.weixin.qq.com/s/C_Rpq8Nl0iUJZrGYYM2slQ" target="_blank" rel="external">QQ音乐技术团队的这篇文章</a>已经讲得非常详细了，我就不重复造轮子了。里面讲述了通过 Lint 找出硬编码，自定义一份 profile，整理成 Excel，语言切换，创建多语言文件夹等，很值得一看。</p>
+<p>文章好，但是有需要补充的地方。</p>
+<h3 id="添加地区配置文件"><a href="#添加地区配置文件" class="headerlink" title="添加地区配置文件"></a>添加地区配置文件</h3><p>除了<a href="https://mp.weixin.qq.com/s/C_Rpq8Nl0iUJZrGYYM2slQ" target="_blank" rel="external">文章</a>介绍的方法，还可以通过：右键点击 <em>string.xml</em> ，选中 <strong>【Open translate Editor<br>】</strong>，打开编辑界面。<br><img src="http://op6c410ta.bkt.clouddn.com/Open_translate_Editor_01.png" alt=""></p>
+<p><img src="http://op6c410ta.bkt.clouddn.com/Open_translate_Editor_02.png" alt=""><br>点击左边的蓝色圆圈可以增加国家区域，勾选【Show only keys needing translations】可以把没有翻译完成的字符串都找出来。比如图中的 all_picture 就是在其他国家的 string.xml 里面没有声明的，这样可以很方便的知道哪些字符串是漏写的。</p>
+<h3 id="语言切换"><a href="#语言切换" class="headerlink" title="语言切换"></a>语言切换</h3><p><a href="https://mp.weixin.qq.com/s/C_Rpq8Nl0iUJZrGYYM2slQ" target="_blank" rel="external">上面的文章</a>介绍的语言切换方法，并不能很好的适应 <em>Android 7.0</em> ，语言切换建议按照<a href="http://gunhansancar.com/change-language-programmatically-in-android/" target="_blank" rel="external">这篇文章的实现</a> ,其中封装有 <code>updateResources</code> 适用于 7.0 及以上，7.0 以下的用 <code>updateResourcesLegacy</code> 方法。此外还有一点要注意，7.0以上的更新了方法，所以必须要 <strong>Application</strong> 和 <strong>Activity</strong> 的 <code>attachBaseContext</code>返回更新的 Context。</p>
+<h3 id="string-相关"><a href="#string-相关" class="headerlink" title="string 相关"></a>string 相关</h3><h4 id="1-s-、-1-d-用法"><a href="#1-s-、-1-d-用法" class="headerlink" title="%1$s 、%1$d 用法"></a>%1$s 、%1$d 用法</h4><p>比如用到一个字符串，<code>已经扫描x本书</code>。这个 <strong>x</strong> 值不是固定的，会随着我扫描的增加而增加。</p>
+<p>一种原始的做法是，把这个字符串分解成，<code>已经扫描</code>、<code>x</code>、<code>本书</code>，三个部分。这种做法可以实现功能，但是多了这么多字符串，太麻烦了，明显不够优雅。</p>
+<p>优雅的做法是这样的：<br><code>&lt;string name=&quot;scan_books&quot;&gt;已扫描%1$d本书&lt;/string&gt;</code></p>
+<p>用的时候是这样的，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">int bookCounts = 5;	</div><div class="line">String text = context.getString(R.string.scan_books, bookCounts);</div></pre></td></tr></table></figure></p>
+<p>其中 <code>%1$d</code>代表可以改变部分。</p>
+<ul>
+<li><p><code>%1</code> 代表第一个参数，如果有多个参数，就是 <code>%2</code> , <code>%3</code>这样以此类推，比如，我想表达 <code>已经扫描了x本书，覆盖y种学科</code>，正确的表达方式是，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;string name=&quot;scan_books_example&quot;&gt;已经扫描了%1$d本书，覆盖%2$d种学科&lt;/string&gt;</div></pre></td></tr></table></figure>
+<p>外面使用和原来一样，只是后面多了个参数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">int bookCounts = 5;</div><div class="line">int type = 2;</div><div class="line">String text = context.getString(R.string.scan_books, bookCounts, type);</div></pre></td></tr></table></figure>
+</li>
+<li><p><code>$d</code> 表示类型，其中 <strong>d</strong> 表示：整形 int , <strong>s</strong> 表示：字符串 String，<strong>f</strong> 表示浮点型。<br>这部分和以前学 C 语言语法是一致的。</p>
+<p>%n$<strong>m</strong>s：设置m的值可以在<strong>输出之前放置m个空格</strong> 。</p>
+<p>%n$<strong>m</strong>d：设置m的值可以在<strong>输出之前放置m个空格</strong>。</p>
+<p>%n$<strong>m</strong>f：设置m的值可以<strong>控制小数位数</strong>，如一个数是 343.22634 ， 但m = <strong>.2</strong> 时，截取小数点后面两位，因为第三位数值为 <strong>6</strong>，满五进一，所以小数点第二位为 <strong>3</strong> ，输出结果为 343.23  。</p>
+</li>
+</ul>
+<h4 id="复数"><a href="#复数" class="headerlink" title="复数"></a>复数</h4><p>选择 x 本书，2本书，中文都用本修饰。但是英文则不一样，有复数的不同， one book , two book<strong>s</strong> 。</p>
+<p>这种情况下，我们应该使用 <strong>plurals</strong> 修饰。</p>
+<p>values-en 下面的 strings.xml  (英文环境)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;plurals name=&quot;choose_book&quot;&gt;</div><div class="line">    &lt;item quantity=&quot;one&quot;&gt;Choose %1$d book&lt;/item&gt;</div><div class="line">    &lt;item quantity=&quot;other&quot;&gt;Choose %1$d books&lt;/item&gt;</div><div class="line">&lt;/plurals&gt;</div></pre></td></tr></table></figure>
+<p>values-zh-rHK 下面的 strings.xml （中国香港）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;plurals name=&quot;choose_book&quot;&gt;</div><div class="line">    &lt;item quantity=&quot;one&quot;&gt;选择 %1$d 本&lt;/item&gt;</div><div class="line">    &lt;item quantity=&quot;other&quot;&gt;选择 %1$d 本&lt;/item&gt;</div><div class="line">&lt;/plurals&gt;</div></pre></td></tr></table></figure>
+<p>外面是这样使用的，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String titleText = getResources().getQuantityString(R.plurals.choose_book, size, size);</div></pre></td></tr></table></figure>
+<h4 id="转义字符"><a href="#转义字符" class="headerlink" title="转义字符"></a>转义字符</h4><p>比如 I’m ，Tom’s ，如果你在 <em>strings.xml</em> 输入，会出现编译不过的情况，这种情况下这个时候我们需要加入转义字符，<strong>I\’m</strong> 、<strong>Tom\’s</strong> 。 </p>
+<p>我不需要这样也可以在 strings.xml 里面输入呀？</p>
+<p>你很可能用错成了中文字符 <strong>’</strong>，变成了 I<strong>’</strong>m。</p>
+<p>其他常用转义字符</p>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>转义表示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“</td>
+<td><code>&amp;#34;</code> 或 <code>&amp;quot;</code></td>
+</tr>
+<tr>
+<td>‘</td>
+<td><code>&amp;#39;</code> 或 <code>&amp;apos;</code></td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td><code>&amp;#38;</code> 或 <code>&amp;amp;</code></td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td><code>&amp;#60;</code> 或 <code>&amp;lt;</code></td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td><code>&amp;#62;</code> 或 <code>&amp;gt;</code></td>
+</tr>
+<tr>
+<td>换行</td>
+<td>\n</td>
+</tr>
+</tbody>
+</table>
+<h2 id="国家区域列表"><a href="#国家区域列表" class="headerlink" title="国家区域列表"></a>国家区域列表</h2><p>国家区域列表，包括国家名称还有国家区号。什么是国家区号？但你打电话的时候，细心的你会发现，有时候前面有个 <strong>+86</strong> ，这个就是区号，<strong>86</strong> 代表的就是中国大陆，美国的是 <strong>1</strong> 。</p>
+<p>比如有个需求，注册手机账号的时候，要供用户选择区号，比如完成如下列表，那么应该如何实现呢？</p>
+<p><img src="http://op6c410ta.bkt.clouddn.com/select_country.jpg" alt=""></p>
+<h3 id="前提：Android-API"><a href="#前提：Android-API" class="headerlink" title="前提：Android API"></a>前提：Android API</h3><p>我们先看 Android 系统 API 提供了我们什么功能。</p>
+<p>系统都是通过 <strong>Local</strong> 这个类获取国家区域相关信息的，比如国家名称，对应语言等。<strong>但是要注意：不能获取对应的国家区号（86这些）</strong>。 </p>
+<h4 id="获取当前国家编号"><a href="#获取当前国家编号" class="headerlink" title="获取当前国家编号"></a>获取当前国家编号</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 获取当前系统设置的国家编号，比如中国大陆 CN</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">public static String getCurrentCountry() &#123;</div><div class="line">    String country = Locale.getDefault().getCountry();</div><div class="line">    return country;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="获取当前系统语言"><a href="#获取当前系统语言" class="headerlink" title="获取当前系统语言"></a>获取当前系统语言</h4><p>提供两种方法，都是通过 <strong>Local</strong> 获取的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 获得当前系统语言</div><div class="line"> * @return zh／en..</div><div class="line"> */</div><div class="line">public static String getCurrentLauguage()&#123;</div><div class="line">    String mCurrentLanguage = Locale.getDefault().getLanguage();</div><div class="line">    //设置成简体中文的时候，getLanguage()返回的是zh</div><div class="line">    return mCurrentLanguage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 获得当前系统语言(第二种方法，这种方法需要判断设备是否大于 Android 7.0)</div><div class="line"> * @param context</div><div class="line"> * @return zh／en..</div><div class="line"> */</div><div class="line">public static String getCurrentLauguageUseResources(Context context)&#123;</div><div class="line">    if (null != context &amp;&amp; null != context.getResources() &amp;&amp; null != context.getResources().getConfiguration()) &#123;</div><div class="line">        Locale locale;  //en_US</div><div class="line">        if (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.N) &#123;</div><div class="line">            locale = context.getResources().getConfiguration().getLocales().get(0);</div><div class="line">        &#125; else &#123;</div><div class="line">            locale = context.getResources().getConfiguration().locale;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        if (null != locale) &#123;</div><div class="line">            String language = locale.getLanguage(); // 获得语言码 en</div><div class="line">            return language;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    return null;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="实例化-Local"><a href="#实例化-Local" class="headerlink" title="实例化 Local"></a>实例化 Local</h4><p>local 有多个构造方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public Locale(String language) &#123;</div><div class="line">  this(language, &quot;&quot;, &quot;&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>参数 language 表示获取的 Local 对象里面的字符串显示的语言类型，如果选择中文，locale 返回的就是中文，其他语言同理。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public Locale(String language, String country) &#123;</div><div class="line">    this(language, country, &quot;&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>相比第一种构造方法，多了个 country （国家编码）参数，就是可以指定获取 country 对应的 local 信息。第一种构造方法，默认是获取当前系统选择的区域信息。</p>
+<h4 id="获取-Local-列表"><a href="#获取-Local-列表" class="headerlink" title="获取 Local 列表"></a>获取 Local 列表</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 获取 Local 列表</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">public static Locale[] getSystemLanguageList()&#123;</div><div class="line">    Locale mLanguagelist[] = Locale.getAvailableLocales();</div><div class="line">    return mLanguagelist;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>下面我们看看国家区号的获取方法，</p>
+<h3 id="方法-1：xml-文件"><a href="#方法-1：xml-文件" class="headerlink" title="方法 1：xml 文件"></a>方法 1：xml 文件</h3><p>在网上找到各个国家的名称和对应的区号，之后写入 <code>arrays.xml</code> 文件，之后在用到的地方读取这个 xml 文件，显示出来。国家资源，可以参考这几篇资料。（<a href="https://github.com/umpirsky/country-list/tree/master/data" target="_blank" rel="external">资料1</a>，<a href="http://blog.csdn.net/shaoyezhangliwei/article/details/49281519" target="_blank" rel="external">资料2</a>，<a href="https://my.oschina.net/lijindou/blog/717013" target="_blank" rel="external">资料3</a>）。</p>
+<p>这种写死的方式，在支持语言多的时候会比较麻烦，而且容易出错，所以推荐方法 2 。</p>
+<h3 id="方法-2：libphonenumber"><a href="#方法-2：libphonenumber" class="headerlink" title="方法 2：libphonenumber"></a>方法 2：libphonenumber</h3><p>使用 <a href="https://github.com/googlei18n/libphonenumber" target="_blank" rel="external">googlei18n/libphonenumber</a> 。该库支持获取国家列表，对应的国家区号，号码是否合法等功能，支持 Java, C++ and JavaScript ，除此之外还收录了 C#, Objective-c, PHP, PostgreSQL, Python, Ruby 的方法。</p>
+<h4 id="获取国家区号"><a href="#获取国家区号" class="headerlink" title="获取国家区号"></a>获取国家区号</h4><p>本质就是调用 <strong>phoneNumberUtil.getCountryCodeForRegion</strong> 其中参数是 <em>getCurrentCountry</em> 就是上面介绍的，代表国家编号。传入当前国家编号，就是获取当前国家区号。传入其他国家编码，就能获取其他国家编号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 获取当前系统对应的国家区号，比如中国大陆 CN 对应 86</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">public static int getCurrentCountryCode() &#123;</div><div class="line">    PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();</div><div class="line">    if (null != phoneNumberUtil) &#123;</div><div class="line">        return phoneNumberUtil.getCountryCodeForRegion(getCurrentCountry());</div><div class="line">    &#125;</div><div class="line">    return 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="拼接-item-数据"><a href="#拼接-item-数据" class="headerlink" title="拼接 item 数据"></a>拼接 item 数据</h4><p>我们每个 item 的数据是这样的 <strong>Afghanistan(+93)</strong> ，这样划分： <strong>Afghanistan</strong>（国家的显示名称）、 <strong>93</strong>（国家区号）、<strong>(+ )</strong> 修饰部分字符串。<strong>getSupportedRegions</strong> 获取集合，之后遍历集合，提现想要字段加入到 bean 里面。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 获取 item 数据集合</div><div class="line"> * 耗时操作，后台线程调用</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">private List&lt;CountryCodeBean&gt; getCountryData() &#123;</div><div class="line">    List&lt;CountryCodeBean&gt; datatList = new ArrayList&lt;CountryCodeBean&gt;();</div><div class="line">    //获取国家代码数据</div><div class="line">    PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();</div><div class="line">    Set&lt;String&gt; set = phoneNumberUtil.getSupportedRegions();</div><div class="line">    Iterator&lt;String&gt; iterator = set.iterator();</div><div class="line">    while (iterator.hasNext()) &#123;</div><div class="line">        String compactCountry = iterator.next();</div><div class="line">        //根据当前系统语言，输出 compactCountry（国家编码）对应的 local 对象。</div><div class="line">        Locale locale = new Locale(LanguageUtil.getCurrentLauguage(), compactCountry);</div><div class="line">        String displayCountry = locale.getDisplayCountry();    //获取详细的国家名称 China</div><div class="line">        int countryCode = phoneNumberUtil.getCountryCodeForRegion(compactCountry);    //获取国家代码 86</div><div class="line">        CountryCodeBean bean = new CountryCodeBean();</div><div class="line">        if (null != bean) &#123;</div><div class="line">            bean.setCompactCountry(compactCountry);</div><div class="line">            bean.setCountryCode(countryCode);</div><div class="line">            bean.setDisplayCountry(displayCountry);</div><div class="line">            datatList.add(bean);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    sort(datatList);</div><div class="line"></div><div class="line">    return datatList;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>默认是没有按照字母的顺序排列的，我们要做下排序。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 按照字母（国际化）排序数据集合</div><div class="line"> * 根据不同国家排序，中国就按拼音，英文就按英文字母排序</div><div class="line"> * @param datatList</div><div class="line"> */</div><div class="line">private void sort(List&lt;CountryCodeBean&gt; datatList) &#123;</div><div class="line">    final Locale locale = new Locale(LanguageUtil.getCurrentLauguage());</div><div class="line">    Collections.sort(datatList, new Comparator&lt;CountryCodeBean&gt;() &#123;</div><div class="line">        @Override</div><div class="line">        public int compare(CountryCodeBean lhs, CountryCodeBean rhs) &#123;</div><div class="line">            String display1 = lhs.getDisplayCountry();</div><div class="line">            String display2 = rhs.getDisplayCountry();</div><div class="line">            //根据不同国家排序，中国就按拼音，英文就按英文字母排序</div><div class="line">            return Collator.getInstance(locale).compare(display1, display2);</div><div class="line">            //return display1.compareTo(display2);</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后再加入一些修饰的字符串（比如 <strong>(+ )</strong> 即可），显示成需求想要的效果即可。</p>
+<h2 id="手机号码"><a href="#手机号码" class="headerlink" title="手机号码"></a>手机号码</h2><h3 id="判断手机号码是否合法"><a href="#判断手机号码是否合法" class="headerlink" title="判断手机号码是否合法"></a>判断手机号码是否合法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 判断号码是否合法</div><div class="line"> * @param number</div><div class="line"> * @param region 国家编码</div><div class="line"> * @return</div><div class="line"> */</div><div class="line">public static boolean isValidNumber(String number, String region) &#123;</div><div class="line">    PhoneNumberUtil phoneNumberUtil = PhoneNumberUtil.getInstance();</div><div class="line">    try &#123;</div><div class="line">        Phonenumber.PhoneNumber swissNumberProto = phoneNumberUtil.parse(number, region);</div><div class="line">        return phoneNumberUtil.isValidNumber(swissNumberProto);</div><div class="line">    &#125; catch (NumberParseException e) &#123;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><em>phoneNumber</em> 为未包括区号的号码，<em>region</em> 代表<em>国家编码</em>。方法里面会根据传入的<em>国家编码</em>，拼接号码，最终验证号码是否合法。</p>
+<h3 id="号码格式化显示"><a href="#号码格式化显示" class="headerlink" title="号码格式化显示"></a>号码格式化显示</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">String swissNumberStr = &quot;044 668 18 00&quot;;</div><div class="line">PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();</div><div class="line">try &#123;</div><div class="line">    Phonenumber.PhoneNumber swissNumberProto = phoneUtil.parse(swissNumberStr, &quot;CH&quot;);</div><div class="line">    if (null != swissNumberProto) &#123;</div><div class="line">        //+41 44 668 18 00</div><div class="line">        String internationalStr = phoneUtil.format(swissNumberProto, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL);</div><div class="line">        //044 668 18 00</div><div class="line">        String nationnalStr = phoneUtil.format(swissNumberProto, PhoneNumberUtil.PhoneNumberFormat.NATIONAL);</div><div class="line">        //+41446681800</div><div class="line">        String e164Str = phoneUtil.format(swissNumberProto, PhoneNumberUtil.PhoneNumberFormat.E164);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125; catch (NumberParseException e) &#123;</div><div class="line">    System.err.println(&quot;NumberParseException was thrown: &quot; + e.toString());</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>初始化的时候可以知道区域比如 ‘’CH’’，使用过程也可以转到其他区域，不然下面为转到美国号码的显示。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//011 41 44 668 1800</div><div class="line">phoneUtil.formatOutOfCountryCallingNumber(swissNumberProto, &quot;US&quot;);</div></pre></td></tr></table></figure>
+<h2 id="时区转换"><a href="#时区转换" class="headerlink" title="时区转换"></a>时区转换</h2><h3 id="时间戳"><a href="#时间戳" class="headerlink" title="时间戳"></a>时间戳</h3><p>Unix 时间戳(<em>Unix timestamp</em>) 是指：从<a href="https://zh.wikipedia.org/wiki/%E5%8D%94%E8%AA%BF%E4%B8%96%E7%95%8C%E6%99%82" target="_blank" rel="external">协调世界时(<strong>UTC</strong>)</a>1970年1月1日0时0分0秒起至现在的总秒数，不考虑闰秒。</p>
+<p>对于大多数用途来说： <strong>UTC</strong> 可以认为等价于 <a href="https://zh.wikipedia.org/wiki/%E6%A0%BC%E6%9E%97%E5%B0%BC%E6%B2%BB%E6%A8%99%E6%BA%96%E6%99%82%E9%96%93" target="_blank" rel="external"><strong>格林尼治标准时间 GMT</strong></a>。</p>
+<p>在 Android 中获取时间戳的方式，就是按 Java 的方式：<code>System.currentTimeMillis()</code> 获取的就是13位的时间戳。<strong>10位</strong>的时间戳表示<strong>秒级</strong>，<strong>13位</strong>的表示<strong>毫秒级</strong>。</p>
+<p>那么比如一个10位时间戳：<strong>1503904245</strong> 。在北京时间 <strong>GMT+8:00</strong> （位于东八区）就表示为： <strong>2017-08-28 15:10:45</strong>。在纽约（北美东部夏令时间）<strong>GMT-4:00</strong>，则表示为：<strong>2017-08-28 3:10:45</strong> 。</p>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><p>上面的方式如何用代码体现？方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 根据时区格式化输出</div><div class="line"> * @param unixTimeStamp unix 时间戳</div><div class="line"> * @param timeZone  输出时间所在时区</div><div class="line"> * @return timeZone 时区下，对应的时间</div><div class="line"> */</div><div class="line">private String fomatByTimeZone(long unixTimeStamp, TimeZone timeZone) &#123;</div><div class="line">    SimpleDateFormat dateFormat = new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);</div><div class="line">    dateFormat.setTimeZone(timeZone);</div><div class="line">    String formatStr = dateFormat.format(new Date(unixTimeStamp));</div><div class="line">    return formatStr;    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如下方式调用，可以获取当前 unix 时间戳下，对应的东八区时间。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fomatByTimeZone(System.currentTimeMillis(), TimeZone.getTimeZone(&quot;GMT+08:00&quot;));</div></pre></td></tr></table></figure>
+<h3 id="特别注意"><a href="#特别注意" class="headerlink" title="特别注意"></a>特别注意</h3><h4 id="美国"><a href="#美国" class="headerlink" title="美国"></a>美国</h4><p>美国实行<a href="https://zh.wikipedia.org/wiki/%E5%A4%8F%E6%97%B6%E5%88%B6" target="_blank" rel="external">夏令时 <strong>DST</strong></a>，美国夏令时<strong>始于每年4月的第1个周日，止于每年10月的最后一个周日</strong>。夏令时比正常时间早一小时，这样人们就可以早起早睡，充分利用日照时间。<br>举个例子，美国纽约在1月份，所在时区是 <strong>GMT-5:00 北美东部标准时间</strong>。在7月份，所在时区是 <strong>GMT-4:00 北美东部夏令时间</strong>。</p>
+<p>所以我们在 <code>TimeZone.getTimeZone(&quot;GMT-04:00&quot;)</code> 传入的参数，不应该写死值 <code>GMT-04:00</code>，而应该输入区域位置，比如纽约就是：<code>America/New_York</code> ，这样系统才能动态的根据不同时间段，给予我们不同的时区。</p>
+<p>国内因为没有夏令时的区分，所以用 <strong>GMT+08:00</strong> 和 <strong>Asia/Shanghai</strong> 是一样的。</p>
+<p>区域列表，可以查看<a href="https://www.epochconverter.com/timezones?q=1504109431902&amp;tz=America%2FNew_York" target="_blank" rel="external">此处</a>，需要注意的是，<strong>单词间空格部分，需要用下划线 _ 代替</strong> 。</p>
+<h2 id="更新／勘误"><a href="#更新／勘误" class="headerlink" title="更新／勘误"></a>更新／勘误</h2><h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><p>暂无</p>
+<h3 id="勘误"><a href="#勘误" class="headerlink" title="勘误"></a>勘误</h3><p>暂无</p>
+<h2 id="相关参考"><a href="#相关参考" class="headerlink" title="相关参考"></a>相关参考</h2><p>[1]<a href="http://www.10tiao.com/html/223/201608/2651232086/1.html" target="_blank" rel="external">Android App国际化 -  QQ音乐技术团队</a><br>[2]<a href="http://blog.csdn.net/xiaoyaovsxin/article/details/8450056" target="_blank" rel="external">android中string.xml中%1$s、%1$d等的用法</a><br>[3]<a href="http://www.jianshu.com/p/ea5f8713c9a3" target="_blank" rel="external">不可不知的 Android strings.xml 那些事</a><br>[4]<a href="http://www.vifo.com.cn/fanti/" target="_blank" rel="external">在线中文简体转繁体</a><br>[5]<a href="http://gunhansancar.com/change-language-programmatically-in-android/" target="_blank" rel="external">Change Language Programmatically in Android</a><br>[6]<a href="https://github.com/umpirsky/country-list/tree/master/data" target="_blank" rel="external">country-list</a><br>[7]<a href="http://blog.csdn.net/shaoyezhangliwei/article/details/49281519" target="_blank" rel="external">android 国际区号注册手机号编码 以及常用城市列表</a><br>[8]<a href="https://my.oschina.net/lijindou/blog/717013" target="_blank" rel="external">Android 选择国家对应区号 中英双版</a><br>[9]<a href="https://github.com/googlei18n/libphonenumber" target="_blank" rel="external">googlei18n/libphonenumber</a><br>[10]<a href="https://zh.wikipedia.org/wiki/" target="_blank" rel="external">维基百科</a><br>[11]<a href="https://www.epochconverter.com/" target="_blank" rel="external">epochconverter.</a><br>[12]<a href="http://tool.lu/timestamp/" target="_blank" rel="external">时间戳转化</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/ansuote_alipay.png" alt="ansuote WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/ansuote_wechatpay.png" alt="ansuote Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/23/Android-提高开发效率的工具/" rel="prev" title="Android 提高开发效率的工具">
+                Android 提高开发效率的工具 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODU1Mi81MTIz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="ansuote" />
+          <p class="site-author-name" itemprop="name">ansuote</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题外话"><span class="nav-number">1.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">2.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hade-Code"><span class="nav-number">3.</span> <span class="nav-text">Hade Code</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#添加地区配置文件"><span class="nav-number">3.1.</span> <span class="nav-text">添加地区配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语言切换"><span class="nav-number">3.2.</span> <span class="nav-text">语言切换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#string-相关"><span class="nav-number">3.3.</span> <span class="nav-text">string 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-s-、-1-d-用法"><span class="nav-number">3.3.1.</span> <span class="nav-text">%1$s 、%1$d 用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复数"><span class="nav-number">3.3.2.</span> <span class="nav-text">复数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#转义字符"><span class="nav-number">3.3.3.</span> <span class="nav-text">转义字符</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#国家区域列表"><span class="nav-number">4.</span> <span class="nav-text">国家区域列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前提：Android-API"><span class="nav-number">4.1.</span> <span class="nav-text">前提：Android API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取当前国家编号"><span class="nav-number">4.1.1.</span> <span class="nav-text">获取当前国家编号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取当前系统语言"><span class="nav-number">4.1.2.</span> <span class="nav-text">获取当前系统语言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实例化-Local"><span class="nav-number">4.1.3.</span> <span class="nav-text">实例化 Local</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取-Local-列表"><span class="nav-number">4.1.4.</span> <span class="nav-text">获取 Local 列表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法-1：xml-文件"><span class="nav-number">4.2.</span> <span class="nav-text">方法 1：xml 文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法-2：libphonenumber"><span class="nav-number">4.3.</span> <span class="nav-text">方法 2：libphonenumber</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#获取国家区号"><span class="nav-number">4.3.1.</span> <span class="nav-text">获取国家区号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#拼接-item-数据"><span class="nav-number">4.3.2.</span> <span class="nav-text">拼接 item 数据</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#手机号码"><span class="nav-number">5.</span> <span class="nav-text">手机号码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#判断手机号码是否合法"><span class="nav-number">5.1.</span> <span class="nav-text">判断手机号码是否合法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#号码格式化显示"><span class="nav-number">5.2.</span> <span class="nav-text">号码格式化显示</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时区转换"><span class="nav-number">6.</span> <span class="nav-text">时区转换</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#时间戳"><span class="nav-number">6.1.</span> <span class="nav-text">时间戳</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">6.2.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特别注意"><span class="nav-number">6.3.</span> <span class="nav-text">特别注意</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#美国"><span class="nav-number">6.3.1.</span> <span class="nav-text">美国</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新／勘误"><span class="nav-number">7.</span> <span class="nav-text">更新／勘误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更新"><span class="nav-number">7.1.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#勘误"><span class="nav-number">7.2.</span> <span class="nav-text">勘误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关参考"><span class="nav-number">8.</span> <span class="nav-text">相关参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ansuote</span>
+</div>
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

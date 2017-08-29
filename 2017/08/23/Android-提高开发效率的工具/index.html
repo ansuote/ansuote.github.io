@@ -1,0 +1,831 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="题外话工欲善其事，必先利其器。有良好的工具，开发事半功倍。本篇介绍我经常使用的一些开发工具，还有其他各式各样的工具可以参考最后的相关参考，有其他好的工具，欢迎留言补充下哈😄注：本文快捷键是 Mac 的。 AS 工具Android Studio 插件一般两种安装方法，  直接在仓库里面搜索插件，直接安装。 对于一些小众插件，还没上传到仓库的，可以直接下载到本地，通过[Install plugins">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 提高开发效率的工具">
+<meta property="og:url" content="http://yoursite.com/2017/08/23/Android-提高开发效率的工具/index.html">
+<meta property="og:site_name" content="ansuote">
+<meta property="og:description" content="题外话工欲善其事，必先利其器。有良好的工具，开发事半功倍。本篇介绍我经常使用的一些开发工具，还有其他各式各样的工具可以参考最后的相关参考，有其他好的工具，欢迎留言补充下哈😄注：本文快捷键是 Mac 的。 AS 工具Android Studio 插件一般两种安装方法，  直接在仓库里面搜索插件，直接安装。 对于一些小众插件，还没上传到仓库的，可以直接下载到本地，通过[Install plugins">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/Android%20Studio%20Plugins.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/gsonformat.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/Android%20ButterKnife%20Zelezny.gif">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/resource_count.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/wifi_adb.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/Codota.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/CodeGlance.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/Android%20%E5%BC%80%E5%8F%91%E5%8A%A9%E6%89%8B.jpg">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/android-TopActivity.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/stetho.png">
+<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/charles.png">
+<meta property="og:updated_time" content="2017-08-24T09:14:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 提高开发效率的工具">
+<meta name="twitter:description" content="题外话工欲善其事，必先利其器。有良好的工具，开发事半功倍。本篇介绍我经常使用的一些开发工具，还有其他各式各样的工具可以参考最后的相关参考，有其他好的工具，欢迎留言补充下哈😄注：本文快捷键是 Mac 的。 AS 工具Android Studio 插件一般两种安装方法，  直接在仓库里面搜索插件，直接安装。 对于一些小众插件，还没上传到仓库的，可以直接下载到本地，通过[Install plugins">
+<meta name="twitter:image" content="http://op6c410ta.bkt.clouddn.com/Android%20Studio%20Plugins.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/08/23/Android-提高开发效率的工具/"/>
+
+
+
+
+
+  <title> Android 提高开发效率的工具 | ansuote </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bbd092b8b5c9a9e3648742e5b07aa693";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ansuote</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/23/Android-提高开发效率的工具/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ansuote">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ansuote">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android 提高开发效率的工具
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-23T16:44:50+08:00">
+                2017-08-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="题外话"><a href="#题外话" class="headerlink" title="题外话"></a>题外话</h2><p>工欲善其事，必先利其器。有良好的工具，开发事半功倍。本篇介绍我经常使用的一些开发工具，还有其他各式各样的工具可以参考最后的<a href="#references">相关参考</a>，有其他好的工具，欢迎留言补充下哈😄<br>注：本文快捷键是 Mac 的。</p>
+<h2 id="AS-工具"><a href="#AS-工具" class="headerlink" title="AS 工具"></a>AS 工具</h2><p>Android Studio 插件一般两种安装方法，</p>
+<ol>
+<li>直接在仓库里面搜索插件，直接安装。</li>
+<li>对于一些小众插件，还没上传到仓库的，可以直接下载到本地，通过<br>[Install plugins from disk…] 从硬盘安装。<br><img src="http://op6c410ta.bkt.clouddn.com/Android%20Studio%20Plugins.png" alt=""></li>
+</ol>
+<h2 id="GsonFormat"><a href="#GsonFormat" class="headerlink" title="GsonFormat"></a><a href="https://plugins.jetbrains.com/plugin/7654-gsonformat" target="_blank" rel="external">GsonFormat</a></h2><p><img src="http://op6c410ta.bkt.clouddn.com/gsonformat.png" alt=""></p>
+<ul>
+<li>说明<br>直接把后台返回的 JSON 复制进去，就能自动生成对应的 Bean。支持多层级，支持单个数据类型修改。</li>
+<li>快捷键<br><strong>option + s</strong></li>
+</ul>
+<h3 id="Android-ButterKnife-Zelezny"><a href="#Android-ButterKnife-Zelezny" class="headerlink" title="Android ButterKnife Zelezny"></a><a href="https://github.com/avast/android-butterknife-zelezny" target="_blank" rel="external">Android ButterKnife Zelezny</a></h3><p><img src="http://op6c410ta.bkt.clouddn.com/Android%20ButterKnife%20Zelezny.gif" alt=""></p>
+<ul>
+<li>说明<br>我们经常用 ButterKnife 代替 findViewById。配合 ButterKnife，布局写好，用这个插件，一键就能把所有对象，监听都生成好。</li>
+<li>快捷键<br><strong>选中资源文件</strong>( 比如 R.layout.activity_settings ) -&gt; <strong>command + N</strong> -&gt; <strong>Generate Butterknife Injections</strong>  </li>
+</ul>
+<h3 id="Android-Resource-Usage-Count"><a href="#Android-Resource-Usage-Count" class="headerlink" title="Android-Resource-Usage-Count"></a><a href="https://github.com/niorgai/Android-Resource-Usage-Count" target="_blank" rel="external">Android-Resource-Usage-Count</a></h3><p><img src="http://op6c410ta.bkt.clouddn.com/resource_count.png" alt=""></p>
+<ul>
+<li>说明<br>统计资源使用次数，乍看一下没有什么用，其实用处还不小。</li>
+</ul>
+<ol>
+<li>轻松的识别出使用次数为 0 的资源，可以快速的手动删除它们。</li>
+<li>与其他小伙伴合作开发项目，有时候遇到一个 string ，我们要修改他，但是不知道其他人的模块是否有用到，之前的方式是要全局去搜索，现在只要看到使用次数为 1 的，就可以断定只有自己的模块使用到，你就可以随便修改了。</li>
+</ol>
+<h3 id="WIFIADB-无线调试"><a href="#WIFIADB-无线调试" class="headerlink" title="WIFIADB 无线调试"></a><a href="https://github.com/huazhouwang/WIFIADB/tree/master/WIFIADBIntelliJPlugin" target="_blank" rel="external">WIFIADB 无线调试</a></h3><p><img src="http://op6c410ta.bkt.clouddn.com/wifi_adb.png" alt=""></p>
+<ul>
+<li>说明<br>如果你厌倦了 USB 调试，觉得手机经常插在电脑上不好，而且公司的网速上行速度够快的话，完全可以用 wifi 调试。</li>
+</ul>
+<h3 id="LayoutFormatter"><a href="#LayoutFormatter" class="headerlink" title="LayoutFormatter"></a><a href="https://github.com/drakeet/LayoutFormatter" target="_blank" rel="external">LayoutFormatter</a></h3><ul>
+<li>说明<br>xml 代码格式化</li>
+<li>快捷键<br><strong>command + option + F</strong></li>
+</ul>
+<h3 id="Codota"><a href="#Codota" class="headerlink" title="Codota"></a><a href="https://plugins.jetbrains.com/plugin/7638-codota" target="_blank" rel="external">Codota</a></h3><p><img src="http://op6c410ta.bkt.clouddn.com/Codota.png" alt=""></p>
+<ul>
+<li>说明<br>这个是用来搜索代码的。有时候一些 API 不知道怎么用，这个时候如果有案例就好了，使用这个插件，可以轻松的找到示例代码。Codota 有对应的 chrome 插件，当然直接浏览器打开他的网址直接搜，也是没有问题的。</li>
+<li>快捷键<br><strong>option + k</strong></li>
+</ul>
+<h3 id="Lifecycle-Sorter"><a href="#Lifecycle-Sorter" class="headerlink" title="Lifecycle Sorter"></a><a href="https://github.com/armandAkop/Lifecycle-Sorter" target="_blank" rel="external">Lifecycle Sorter</a></h3><ul>
+<li>说明<br><strong>使用频率较小</strong>，这个工具是用来，让 Activity 或者 Fragment 按照声明周期的顺序进行排列的。</li>
+<li>快捷键<br><strong>command + option + K</strong></li>
+</ul>
+<h3 id="CodeGlance"><a href="#CodeGlance" class="headerlink" title="CodeGlance"></a><a href="https://plugins.jetbrains.com/plugin/7275-codeglance" target="_blank" rel="external">CodeGlance</a></h3><p><img src="http://op6c410ta.bkt.clouddn.com/CodeGlance.png" alt=""></p>
+<ul>
+<li>说明<br><strong>使用频率较小</strong>，安装了这个插件，就是在右侧有一个代码预览的侧边栏，有什么用呢？也没什么用，就是让你能对代码位置有个大致的把握，还有就是比较炫😂</li>
+</ul>
+<h2 id="辅助-APP"><a href="#辅助-APP" class="headerlink" title="辅助 APP"></a>辅助 APP</h2><h3 id="Android-开发助手"><a href="#Android-开发助手" class="headerlink" title="Android 开发助手"></a><a href="(http://www.trinea.cn/android/android-develop-and-debug-tools-1-4-0-system-ui-tuner/">Android 开发助手</a></h3><p>Trinea 大神开发的工具，集成了许多系统开发者选项，有了这个 APP ，就不用在多层的系统层级里面找这些功能了。一键打开。</p>
+<p><img src="http://op6c410ta.bkt.clouddn.com/Android%20%E5%BC%80%E5%8F%91%E5%8A%A9%E6%89%8B.jpg" alt=""></p>
+<h3 id="android-TopActivity"><a href="#android-TopActivity" class="headerlink" title="android-TopActivity"></a><a href="https://github.com/109021017/android-TopActivity" target="_blank" rel="external">android-TopActivity</a></h3><p>这个 APP 是用来显示当前 Activity 的。非常有用。有时候我们熟悉一个项目，不知道这个界面对应的是哪个 Activity，很可能这时候就有从入口开始，一步步跟代码，看他怎么跳转的。有了这个 APP 就非常方便，他会在左上角开启一个悬浮框，在里面显示当前应用的<strong>包名</strong> 和当前界面对应的 <strong>Activity</strong> 。</p>
+<p><img src="http://op6c410ta.bkt.clouddn.com/android-TopActivity.png" alt=""></p>
+<h2 id="Chrome-相关"><a href="#Chrome-相关" class="headerlink" title="Chrome 相关"></a>Chrome 相关</h2><h3 id="Vysor"><a href="#Vysor" class="headerlink" title="Vysor"></a><a href="https://chrome.google.com/webstore/detail/vysor/gidgenkbbabolejbgbpnhbimgjbffefm?utm_source=chrome-ntp-icon" target="_blank" rel="external">Vysor</a></h3><p>chrome 插件。把手机屏幕投影到电脑里面，而且通过点击电脑的屏幕，可以把对应指令传给手机，实现对手机的控制。<br>使用场景：</p>
+<ol>
+<li>手机截图视频控制。</li>
+<li>远程控制手机。</li>
+</ol>
+<h3 id="Stetho"><a href="#Stetho" class="headerlink" title="Stetho"></a><a href="https://github.com/facebook/stetho" target="_blank" rel="external">Stetho</a></h3><p>facebook 开发，用来查看 APP 数据库，网络状态，本地的 SharedPreference。设备不需要 root，但是需要能科学上网。<br>使用步骤：</p>
+<ol>
+<li><p>在 builde.gradle 引入该包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">compile &apos;com.facebook.stetho:stetho:1.5.0&apos;</div><div class="line">compile &apos;com.facebook.stetho:stetho-okhttp3:1.5.0&apos;</div><div class="line">compile &apos;com.facebook.stetho:stetho-js-rhino:1.5.0&apos;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在 Apprication 的 onCreate() 进行初始化。<br><code>Stetho.initializeWithDefaults(this);</code></p>
+</li>
+<li>在 chrome 的地址输入栏里面输入，<br><code>chrome://inspect</code></li>
+</ol>
+<p>效果如下图所示：<br><img src="http://op6c410ta.bkt.clouddn.com/stetho.png" alt=""></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="直接弹到某个界面"><a href="#直接弹到某个界面" class="headerlink" title="直接弹到某个界面"></a>直接弹到某个界面</h3><ul>
+<li>说明<br>调试的时候，有时候写的界面是在层层点击里面的，这时候要么把他设置成默认启动界面，要么就要就层层去点，才能看到这个界面。</li>
+<li>用法</li>
+</ul>
+<ol>
+<li>在 <em>AndroidManifest.xml</em> 声明该 Activity 是可以被外部启动的。<br><code>android:exported=&quot;true&quot;</code><br><strong>注意：正式环境，记得去掉该声明，不然该界面可能会被外部随便启动</strong></li>
+<li>在 <strong>Terminal</strong>  cd 到当前目录，之后输入（按照包名／类名的形式）<br><code>adb shell am start -n com.green.tomato.datusi/**com.green.tomato.datusi.activity.RegisterLastExActivity**</code></li>
+</ol>
+<h3 id="apkpure"><a href="#apkpure" class="headerlink" title="apkpure"></a><a href="https://apkpure.com/" target="_blank" rel="external">apkpure</a></h3><p>这个是用来下载 Apk 的。在哪里能下载纯正的 Android APP，当然是官方的 Google Play，但是因为 Google 已经退出中国了，国内的各大 ROM 厂商都把 Google Play 去除了，假设你费力的安装上了，但是还需要科学上网….</p>
+<p>通过这个网站，在里面直接搜索你想要的 APP （可以把 Google Play 对应该 APP 的地址复制进去搜索），就能下载下来了。比国内各大应用商店的可靠。</p>
+<h3 id="抓包／模拟弱网工具"><a href="#抓包／模拟弱网工具" class="headerlink" title="抓包／模拟弱网工具"></a>抓包／模拟弱网工具</h3><p>Mac 下最好的抓包工具是 <a href="https://www.charlesproxy.com/" target="_blank" rel="external"><strong>charles</strong></a>，Windows 下则是 <strong>Fiddler</strong>。<br>下面以 <strong>charles</strong> 为例。配置说明参照下面这两篇文章即可，<a href="http://blog.devtang.com/2015/11/14/charles-introduction/" target="_blank" rel="external">文章1</a>，<a href="http://blog.tingyun.com/web/article/detail/516" target="_blank" rel="external">文章2</a></p>
+<p>注意：charles 为收费软件，免费使用 30 天。到时怎么办，可以<a href="http://www.qingpingshan.com/rjbc/java/290556.html" target="_blank" rel="external">戳这里</a>，对应的<a href="https://gist.github.com/Oritz/a7232a5d298e33a0834e0546bb03925b" target="_blank" rel="external">脚本</a>。</p>
+<p>下图为模拟弱网的设置，选择最小的 56 kbps Modem 的即可。<br><img src="http://op6c410ta.bkt.clouddn.com/charles.png" alt=""></p>
+<h3 id="后台接口调试工具"><a href="#后台接口调试工具" class="headerlink" title="后台接口调试工具"></a>后台接口调试工具</h3><p><strong>insomnia</strong> 或者 <strong>postman</strong> 都可以，这些工具除了客户端版本，还有 chrome 版本供我们选择。</p>
+<h2 id="更新／勘误"><a href="#更新／勘误" class="headerlink" title="更新／勘误"></a>更新／勘误</h2><h3 id="更新"><a href="#更新" class="headerlink" title="更新"></a>更新</h3><p>暂无</p>
+<h3 id="勘误"><a href="#勘误" class="headerlink" title="勘误"></a>勘误</h3><p>暂无</p>
+<h2 id="相关参考"><a href="#相关参考" class="headerlink" title="相关参考"></a><span id="references">相关参考</span></h2><p>[1]<a href="http://www.jianshu.com/p/1bdb98c3bf4c" target="_blank" rel="external">安卓开发中必备的那些神器APP</a><br>[2]<a href="https://ydmmocoo.github.io/2016/06/28/Android-Studio%E6%8F%92%E4%BB%B6%E6%95%B4%E7%90%86/" target="_blank" rel="external">Android Studio插件整理</a><br>[3]<a href="http://stormzhang.com/android/2015/03/05/android-debug-use-chrome/" target="_blank" rel="external">使用CHROME来调试你的ANDROID APP</a><br>[4]<a href="http://blog.tingyun.com/web/article/detail/516" target="_blank" rel="external">Android 常用抓包工具介绍之Charles</a><br>[5]<a href="http://blog.devtang.com/2015/11/14/charles-introduction/" target="_blank" rel="external">Charles 从入门到精通</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/ansuote_alipay.png" alt="ansuote WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/ansuote_wechatpay.png" alt="ansuote Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/24/Android 国际化总结/" rel="next" title="Android 国际化总结">
+                <i class="fa fa-chevron-left"></i> Android 国际化总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/23/读书笔记 - 《程序员的职业素养》/" rel="prev" title="读书笔记 - 《程序员的职业素养》">
+                读书笔记 - 《程序员的职业素养》 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODU1Mi81MTIz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="ansuote" />
+          <p class="site-author-name" itemprop="name">ansuote</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#题外话"><span class="nav-number">1.</span> <span class="nav-text">题外话</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AS-工具"><span class="nav-number">2.</span> <span class="nav-text">AS 工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GsonFormat"><span class="nav-number">3.</span> <span class="nav-text">GsonFormat</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-ButterKnife-Zelezny"><span class="nav-number">3.1.</span> <span class="nav-text">Android ButterKnife Zelezny</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-Resource-Usage-Count"><span class="nav-number">3.2.</span> <span class="nav-text">Android-Resource-Usage-Count</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WIFIADB-无线调试"><span class="nav-number">3.3.</span> <span class="nav-text">WIFIADB 无线调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LayoutFormatter"><span class="nav-number">3.4.</span> <span class="nav-text">LayoutFormatter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Codota"><span class="nav-number">3.5.</span> <span class="nav-text">Codota</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lifecycle-Sorter"><span class="nav-number">3.6.</span> <span class="nav-text">Lifecycle Sorter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CodeGlance"><span class="nav-number">3.7.</span> <span class="nav-text">CodeGlance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助-APP"><span class="nav-number">4.</span> <span class="nav-text">辅助 APP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android-开发助手"><span class="nav-number">4.1.</span> <span class="nav-text">Android 开发助手</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#android-TopActivity"><span class="nav-number">4.2.</span> <span class="nav-text">android-TopActivity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-相关"><span class="nav-number">5.</span> <span class="nav-text">Chrome 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vysor"><span class="nav-number">5.1.</span> <span class="nav-text">Vysor</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stetho"><span class="nav-number">5.2.</span> <span class="nav-text">Stetho</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">6.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#直接弹到某个界面"><span class="nav-number">6.1.</span> <span class="nav-text">直接弹到某个界面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apkpure"><span class="nav-number">6.2.</span> <span class="nav-text">apkpure</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抓包／模拟弱网工具"><span class="nav-number">6.3.</span> <span class="nav-text">抓包／模拟弱网工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后台接口调试工具"><span class="nav-number">6.4.</span> <span class="nav-text">后台接口调试工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新／勘误"><span class="nav-number">7.</span> <span class="nav-text">更新／勘误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#更新"><span class="nav-number">7.1.</span> <span class="nav-text">更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#勘误"><span class="nav-number">7.2.</span> <span class="nav-text">勘误</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关参考"><span class="nav-number">8.</span> <span class="nav-text">相关参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ansuote</span>
+</div>
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
