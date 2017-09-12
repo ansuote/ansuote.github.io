@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/stetho.png">
 <meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/dryrun_img.png">
 <meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/charles.png">
-<meta property="og:updated_time" content="2017-09-04T06:52:55.000Z">
+<meta property="og:updated_time" content="2017-09-12T03:03:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 提高开发效率的工具">
 <meta name="twitter:description" content="题外话工欲善其事，必先利其器。有良好的工具，开发事半功倍。本篇介绍我经常使用的一些开发工具，还有其他各式各样的工具可以参考最后的相关参考，有其他好的工具，欢迎留言补充下哈😄注：本文快捷键是 Mac 的。 后续更新／勘误（2017.09.04），请点击查看 AS 工具Android Studio 插件一般两种安装方法，  直接在仓库里面搜索插件，直接安装。 对于一些小众插件，还没上传到仓库的，可以">
@@ -431,7 +431,8 @@
 </ul>
 <ol>
 <li>在 <em>AndroidManifest.xml</em> 声明该 Activity 是可以被外部启动的。<br><code>android:exported=&quot;true&quot;</code><br><strong>注意：正式环境，记得去掉该声明，不然该界面可能会被外部随便启动</strong></li>
-<li>在 <strong>Terminal</strong>  cd 到当前目录，之后输入（按照包名／类名的形式）<br><code>adb shell am start -n com.green.tomato.datusi/**com.green.tomato.datusi.activity.RegisterLastExActivity**</code></li>
+<li>在 <strong>Terminal</strong>  cd 到当前目录，之后输入（按照包名／类名的形式）<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ adb shell am start -n com.green.tomato.datusi/com.green.tomato.datusi.activity.RegisterLastExActivity</div></pre></td></tr></table></figure>
+</li>
 </ol>
 <h3 id="一键运行开源项目"><a href="#一键运行开源项目" class="headerlink" title="一键运行开源项目"></a><span id="dryrun">一键运行开源项目</span></h3><p>在 github 的开源项目，以前要运行的话，是先 clone 到本地，之后要么用 Android Studio 导入跑起来，要么用 gradle 命令行打包编译。</p>
 <p>如果 gradle 版本不一致，要么修改为本地有的版本，要么重新下载新的 gradle。</p>
