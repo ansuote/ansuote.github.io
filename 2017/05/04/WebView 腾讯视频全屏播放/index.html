@@ -94,16 +94,16 @@
 <meta property="og:url" content="http://yoursite.com/2017/05/04/WebView 腾讯视频全屏播放/index.html">
 <meta property="og:site_name" content="ansuote">
 <meta property="og:description" content="概述本文讲述的是，通过 WebView加载带有视频的网页，实现点击网页上的全屏按钮，实现视频横屏、全屏播放的功能。具体代码可见Demo ，展现的有腾讯视频，Bilibili视频，土豆视频。 需求最近有个需求，加载一个腾讯视频的网页，用户点击网页上的全屏按钮，就能实现设备横屏，全屏播放。 前提设置属性 在 AndroidManifest 声明网络权限 &amp;lt;uses-permission andr">
-<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/webview_video_%20authority.png">
-<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/webview_video_page_fullscreen.png">
-<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/webview_video_page_normal.png">
-<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/webview_video_chrome_choose.png">
-<meta property="og:image" content="http://op6c410ta.bkt.clouddn.com/webview_ssl.png">
-<meta property="og:updated_time" content="2017-07-06T03:26:02.000Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_video_%20authority.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_video_page_fullscreen.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_video_page_normal.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_video_chrome_choose.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_ssl.png">
+<meta property="og:updated_time" content="2019-02-14T15:38:16.983Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebView 腾讯视频全屏播放">
 <meta name="twitter:description" content="概述本文讲述的是，通过 WebView加载带有视频的网页，实现点击网页上的全屏按钮，实现视频横屏、全屏播放的功能。具体代码可见Demo ，展现的有腾讯视频，Bilibili视频，土豆视频。 需求最近有个需求，加载一个腾讯视频的网页，用户点击网页上的全屏按钮，就能实现设备横屏，全屏播放。 前提设置属性 在 AndroidManifest 声明网络权限 &amp;lt;uses-permission andr">
-<meta name="twitter:image" content="http://op6c410ta.bkt.clouddn.com/webview_video_%20authority.png">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_video_%20authority.png">
 
 
 
@@ -388,7 +388,7 @@
 <p> 好了，接下来看看我们应该如何解决全屏的问题，先从<a href="https://developer.android.com/reference/android/webkit/WebView.html" target="_blank" rel="external">官方Webview文档</a>找找答案吧，</p>
 </li>
 </ol>
-<h2 id="官方解决方法"><a href="#官方解决方法" class="headerlink" title="官方解决方法"></a>官方解决方法</h2><h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3><p><img src="http://op6c410ta.bkt.clouddn.com/webview_video_%20authority.png" alt=""></p>
+<h2 id="官方解决方法"><a href="#官方解决方法" class="headerlink" title="官方解决方法"></a>官方解决方法</h2><h3 id="实现方法"><a href="#实现方法" class="headerlink" title="实现方法"></a>实现方法</h3><p><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_video_%20authority.png" alt=""></p>
 <h4 id="打开硬件加速"><a href="#打开硬件加速" class="headerlink" title="打开硬件加速"></a>打开硬件加速</h4><p>此处为 WebView 所在的 Activity 开启硬件加速。在 Mainifest 声明即可。</p>
 <p><code>android:hardwareAccelerated=&quot;true&quot;</code></p>
 <h4 id="setWebChromeClient"><a href="#setWebChromeClient" class="headerlink" title="setWebChromeClient"></a>setWebChromeClient</h4><p>并且重写 onShowCustomView（点击全屏按钮时候回调） 和 onHideCustomView（再次点击退出全屏的时候回调）</p>
@@ -419,12 +419,12 @@
 <h4 id="Tag-的获取方式"><a href="#Tag-的获取方式" class="headerlink" title="Tag 的获取方式"></a>Tag 的获取方式</h4><p><code>TagUtils.java</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">public class TagUtils &#123;</div><div class="line"></div><div class="line">    private static String getTagByUrl(String url) &#123;</div><div class="line">        if (url.contains(&quot;qq&quot;)) &#123;</div><div class="line">            if (url.contains(&quot;iframe&quot;)) &#123;</div><div class="line">                //(全屏视频。通过网页【分享】- 【通用代码】)</div><div class="line">                // https://v.qq.com/iframe/player.html?vid=m0394wjagsq&amp;tiny=0&amp;auto=0</div><div class="line">                return &quot;tvp_fullscreen_button&quot;;</div><div class="line">            &#125; else &#123;</div><div class="line">                // 普通网页界面</div><div class="line">                // https://v.qq.com/x/page/m0394wjagsq.html</div><div class="line">                return &quot;txp_btn_fullscreen&quot;;</div><div class="line">            &#125;</div><div class="line">        &#125; else if (url.contains(&quot;bilibili&quot;)) &#123;</div><div class="line">            return &quot;icon-widescreen&quot;;       //http://www.bilibili.com/mobile/index.html</div><div class="line">        &#125;</div><div class="line">        return &quot;&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static String getJs(String url) &#123;</div><div class="line">        String tag = getTagByUrl(url);</div><div class="line">        if (TextUtils.isEmpty(tag)) &#123;</div><div class="line">            return &quot;javascript:&quot;;</div><div class="line">        &#125; else &#123;</div><div class="line">            return &quot;javascript:document.getElementsByClassName(&apos;&quot; + tag + &quot;&apos;)[0].addEventListener(&apos;click&apos;,function()&#123;onClickFullScreenBtn.fullscreen();return false;&#125;);&quot;;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里全屏网页指的是，整个页面都是全屏的网页：</p>
-<p><img src="http://op6c410ta.bkt.clouddn.com/webview_video_page_fullscreen.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_video_page_fullscreen.png" alt=""></p>
 <p>普通网页指的是：</p>
-<p><img src="http://op6c410ta.bkt.clouddn.com/webview_video_page_normal.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_video_page_normal.png" alt=""></p>
 <p>以普通的网页为例，说下tag应该这样获取，</p>
 <p>用 chrome 打开网页，右键打开 inspect ，选中全屏按钮，就可以定位到对于的 tag。</p>
-<p><img src="http://op6c410ta.bkt.clouddn.com/webview_video_chrome_choose.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_video_chrome_choose.png" alt=""></p>
 <h4 id="本地方法定义"><a href="#本地方法定义" class="headerlink" title="本地方法定义"></a>本地方法定义</h4><ol>
 <li><p>打开 JS 调用许可</p>
 <p><code>VideoWebView.java</code></p>
@@ -439,7 +439,7 @@
 </ol>
 <h3 id="结论-1"><a href="#结论-1" class="headerlink" title="结论"></a>结论</h3><p>在使用中，该方法对于不同机型，不同Android版本是适用的，如果出现偶尔回调实效的情况的同学，可以尝试在加载网页的不同进度阶段 onProgressChanged 尝试注入。终于解决腾讯视频加载问题，休息一下，就到这里哈。</p>
 <h2 id="后续问题"><a href="#后续问题" class="headerlink" title="后续问题"></a>后续问题</h2><h3 id="白屏"><a href="#白屏" class="headerlink" title="白屏"></a>白屏</h3><p>原本还是可以的，突然间用 WebView 打开网页就白屏了，难道是 URL 对应的页面改了？<br>我用浏览器，打开发现是这样的显示：<strong>NET::ERR_CERT_COMMON_NAME_INVALID</strong></p>
-<p><img src="http://op6c410ta.bkt.clouddn.com/webview_ssl.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/webview_ssl.png" alt=""></p>
 <p>细想了下，所在环境的网络是发生了变化，现在变成了能科学上网了。所以 SSL 认证是时候发生错误，认定为不安全，WebView 处理的是终止继续访问，所以出现了白屏。</p>
 <p>这样的体验肯定是不好的，遇到这种情况我们可不可以监听得到呢？答案是可以的。</p>
 <p><code>private boolean mIgnoreSslError;  //是否忽略ssl证书错误</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">private class CustomWebClient extends WebViewClient &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) &#123;</div><div class="line">        if (mIgnoreSslError) &#123;</div><div class="line">            // let&apos;s ignore ssl error</div><div class="line">            handler.proceed();</div><div class="line">        &#125; else &#123;</div><div class="line">        	 super.onReceivedSslError(view, handler, error);</div><div class="line">        	//不忽略，显示自定义错误界面</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    //....</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -652,7 +652,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
