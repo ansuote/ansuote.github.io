@@ -1,0 +1,831 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="思维导图 知识点补充坐标详解View提供获取坐标方法1View的坐标系：是相对于父控件而言的 getTop(): 获取View自身顶边到其父布局顶边的距离。 getLeft(): 获取View自身左边到其父布局左边的距离。  getRight(): 获取View自身右边到其父布局左边的距离。  getBottom(): 获取View自身底边到其父布局顶边的距离。  getTranslationX(">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自定义 view 篇">
+<meta property="og:url" content="http://yoursite.com/2018/02/17/自定义 view 篇/index.html">
+<meta property="og:site_name" content="ansuote">
+<meta property="og:description" content="思维导图 知识点补充坐标详解View提供获取坐标方法1View的坐标系：是相对于父控件而言的 getTop(): 获取View自身顶边到其父布局顶边的距离。 getLeft(): 获取View自身左边到其父布局左边的距离。  getRight(): 获取View自身右边到其父布局左边的距离。  getBottom(): 获取View自身底边到其父布局顶边的距离。  getTranslationX(">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_%E6%B5%8B%E9%87%8F%E8%A7%84%E5%88%99.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_01.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_02.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_03.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_04.png">
+<meta property="og:updated_time" content="2019-02-17T03:23:38.121Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自定义 view 篇">
+<meta name="twitter:description" content="思维导图 知识点补充坐标详解View提供获取坐标方法1View的坐标系：是相对于父控件而言的 getTop(): 获取View自身顶边到其父布局顶边的距离。 getLeft(): 获取View自身左边到其父布局左边的距离。  getRight(): 获取View自身右边到其父布局左边的距离。  getBottom(): 获取View自身底边到其父布局顶边的距离。  getTranslationX(">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/17/自定义 view 篇/"/>
+
+
+
+
+
+  <title> 自定义 view 篇 | ansuote </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bbd092b8b5c9a9e3648742e5b07aa693";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">ansuote</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/17/自定义 view 篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ansuote">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="ansuote">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                自定义 view 篇
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-17T23:28:00+08:00">
+                2018-02-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="思维导图"><a href="#思维导图" class="headerlink" title="思维导图"></a>思维导图</h3><p><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view.png" alt=""></p>
+<h3 id="知识点补充"><a href="#知识点补充" class="headerlink" title="知识点补充"></a>知识点补充</h3><h4 id="坐标详解"><a href="#坐标详解" class="headerlink" title="坐标详解"></a>坐标详解</h4><h5 id="View提供获取坐标方法"><a href="#View提供获取坐标方法" class="headerlink" title="View提供获取坐标方法"></a>View提供获取坐标方法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">View的坐标系：是相对于父控件而言的</div></pre></td></tr></table></figure>
+<p>getTop(): 获取View自身顶边到其父布局顶边的距离。</p>
+<p>getLeft(): 获取View自身左边到其父布局左边的距离。 </p>
+<p>getRight(): 获取View自身右边到其父布局左边的距离。 </p>
+<p>getBottom(): 获取View自身底边到其父布局顶边的距离。 </p>
+<p>getTranslationX(): 计算的是该View在X轴的偏移量。初始值为0，向左偏移值为负，向右偏移值为正。 </p>
+<p>getTranslationY(): 计算的是该View在Y轴的偏移量。初始值为0，向上偏移为负，向下偏移为证。 </p>
+<h5 id="MotionEvent提供的方法"><a href="#MotionEvent提供的方法" class="headerlink" title="MotionEvent提供的方法"></a>MotionEvent提供的方法</h5><p>getX():获取点击点距离<strong>所在组件坐标系</strong>的左边距离，即视图坐标。</p>
+<p>getY():获取点击点距离<strong>所在组件坐标系</strong>的顶边距离，即视图坐标。</p>
+<p>getRawX():获取点击点距离<strong>整个屏幕</strong>左边距离，即绝对坐标。</p>
+<p>getRawY():获取点击点距离<strong>整个屏幕</strong>顶边距离，即绝对坐标。</p>
+<h4 id="getMeasureWidth-和-getWidth"><a href="#getMeasureWidth-和-getWidth" class="headerlink" title="getMeasureWidth() 和 getWidth()"></a>getMeasureWidth() 和 getWidth()</h4><p>一般情况下相等，获取时机不一样。</p>
+<ol>
+<li><p>getMeasureWidth(): measure() 结束后可以获取，通过 setMeasuredDimension 设置的。 </p>
+</li>
+<li><p>getWidth(): onLayout()之后才能获取，通过视图 右边的坐标 - 左边的坐标, 计算来的。</p>
+</li>
+</ol>
+<h4 id="硬件加速"><a href="#硬件加速" class="headerlink" title="硬件加速"></a><a href="https://github.com/GcsSloop/AndroidNote/issues/7" target="_blank" rel="external">硬件加速</a></h4><h4 id="onMeasure-onLayout-onDraw-流程详解"><a href="#onMeasure-onLayout-onDraw-流程详解" class="headerlink" title="onMeasure, onLayout, onDraw 流程详解"></a><a href="https://www.jianshu.com/p/3d2c49315d68" target="_blank" rel="external">onMeasure, onLayout, onDraw 流程详解</a></h4><h5 id="onMeasure"><a href="#onMeasure" class="headerlink" title="onMeasure"></a>onMeasure</h5><p>Q: 最终测量的大小是如何确定的，有什么规则？ </p>
+<p>A: 大小是由设置的子元素的大小和所在父元素的测量规则一起决定。 </p>
+<p><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_%E6%B5%8B%E9%87%8F%E8%A7%84%E5%88%99.png" alt=""></p>
+<p>Q: 在哪里实现遍历，测量子元素的宽高？自定义 view 的时候需要手动调用吗？ </p>
+<p>A: 需要手动调用。在父元素（ ViewGroup ） 的 <strong>onMeasure</strong> 里面对子元素进行测量。根据控件需要,可以如下： </p>
+<ul>
+<li><p>逐个测量的方法。比如 <strong>child.measure</strong> (包括内边距) 或者 <strong>child.measureChildWithMargins</strong> (包括内边距 + 外边距) 。</p>
+</li>
+<li><p>全部测量方法。 parent.measureChildren, 其内部实现也是去遍历 <strong>child.measure</strong> 。</p>
+</li>
+</ul>
+<h5 id="onLayout"><a href="#onLayout" class="headerlink" title="onLayout"></a>onLayout</h5><p>Q: 在哪里循环遍历，确定子元素的位置？自定义 view 的时候需要手动调用吗？ </p>
+<p>A: 需要手动调用。在父元素（ ViewGroup ）的 <strong>onLayout</strong> 里面，循环调用 <strong>child.layout</strong> 方法。以 <em>RelativeLayout.java</em> 为例： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">@Override </div><div class="line"></div><div class="line">protected void onLayout(boolean changed, int l, int t, int r, int b) &#123; </div><div class="line"></div><div class="line">	// The layout has actually already been performed and the positions </div><div class="line"></div><div class="line">	// cached. Apply the cached values to the children. </div><div class="line"></div><div class="line">	final int count = getChildCount(); </div><div class="line"></div><div class="line">	for (int i = 0; i &lt; count; i++) &#123; </div><div class="line"></div><div class="line">		View child = getChildAt(i); </div><div class="line"></div><div class="line">		if (child.getVisibility() != GONE) &#123; </div><div class="line"></div><div class="line">			RelativeLayout.LayoutParams st = </div><div class="line"></div><div class="line">			(RelativeLayout.LayoutParams) child.getLayoutParams(); </div><div class="line"></div><div class="line">			child.layout(st.mLeft, st.mTop, st.mRight, st.mBottom); </div><div class="line"></div><div class="line">		&#125; </div><div class="line"></div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h5 id="onDraw"><a href="#onDraw" class="headerlink" title="onDraw"></a>onDraw</h5><p>Q: 在哪里循环遍历，绘制子元素？自定义 view 的时候需要手动调用吗？ </p>
+<p>A: 不需要手动调用，View 在 onDraw 方法会调用 <em>dispatchDraw</em> ，而 ViewGroup 会实现该方法，在 <em>dispatchDraw</em> 进一步调用 <strong>drawChild</strong> 实现遍历绘制子元素。<em>如下：ViewGroup.java</em> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">protected void dispatchDraw(Canvas canvas) &#123;</div><div class="line">/**</div><div class="line">* 省略代码.........</div><div class="line">*/</div><div class="line">        for (int i = 0; i &lt; childrenCount; i++) &#123;</div><div class="line">        while (transientIndex &gt;= 0 &amp;&amp; mTransientIndices.get(transientIndex) == i) &#123;</div><div class="line">            final View transientChild = mTransientViews.get(transientIndex);</div><div class="line">            if ((transientChild.mViewFlags &amp; VISIBILITY_MASK) == VISIBLE ||</div><div class="line">                    transientChild.getAnimation() != null) &#123;</div><div class="line">                more |= drawChild(canvas, transientChild, drawingTime);</div><div class="line">            &#125;</div><div class="line">            transientIndex++;</div><div class="line">            if (transientIndex &gt;= transientCount) &#123;</div><div class="line">                transientIndex = -1;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        final int childIndex = getAndVerifyPreorderedIndex(childrenCount, i, customOrder);</div><div class="line">        final View child = getAndVerifyPreorderedView(preorderedList, children, childIndex);</div><div class="line">        if ((child.mViewFlags &amp; VISIBILITY_MASK) == VISIBLE || child.getAnimation() != null) &#123;</div><div class="line">            more |= drawChild(canvas, child, drawingTime);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">/**</div><div class="line">* 省略代码.........</div><div class="line">*/</div></pre></td></tr></table></figure>
+<h6 id="易忘点"><a href="#易忘点" class="headerlink" title="易忘点"></a>易忘点</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Path.Direction.CCW	逆时针 </div><div class="line"></div><div class="line">Path.Direction.CW	 顺时针 </div><div class="line"></div><div class="line">rect.exactCenterX()	 获取中心点X轴坐标</div></pre></td></tr></table></figure>
+<h3 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h3><h4 id="自定义-view-xml预览空白"><a href="#自定义-view-xml预览空白" class="headerlink" title="自定义 view , xml预览空白"></a>自定义 view , xml预览空白</h4><p>what: 控制台提示报错 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">The following classes could not be instantiated: - com.green.tomato.datusi.module.base.widget.RemainEditText (Open Class, Show Exception, Clear Cache) </div><div class="line"></div><div class="line">Tip: Use View.isInEditMode() in your custom views to skip code or show sample data when shown in the IDE.</div></pre></td></tr></table></figure>
+<p>when: 自定义view，在 xml 预览的时候。</p>
+<p>why：自定义 view 里面，context 为 null，导致报错。</p>
+<p>how：增加判断</p>
+<p>if ( null == mContext )    return; </p>
+<h4 id="获取系统控件的某些xml定义值"><a href="#获取系统控件的某些xml定义值" class="headerlink" title="获取系统控件的某些xml定义值"></a>获取系统控件的某些xml定义值</h4><p>Q: 在继承以后控件进行扩展的时候，有时候需要获取一些 xml的属性值，但是该值没有暴露接口，无法获取。或者获取的方法有版本兼容性问题，那么改怎么办呢？ </p>
+<p>A：举个例子：【实战1练习】我有个控件是继承 EditText, 实现右下角显示数字。这个时候我要获取 editText 的 <strong>maxLength</strong>。获取方法可以这样。 </p>
+<ol>
+<li><p><a href="https://www.meansome.top/index.php/archives/12/" target="_blank" rel="external">用反射</a> </p>
+</li>
+<li><p>API &gt; 21 的时候，系统有提供方法 </p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">for (InputFilter filter : mEditText.getFilters()) &#123; </div><div class="line"></div><div class="line">	if (filter instanceof InputFilter.LengthFilter) &#123; </div><div class="line"></div><div class="line">		((InputFilter.LengthFilter) filter).getMax()); </div><div class="line"></div><div class="line">	&#125; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>明显这些都不是好选择，那我们可以怎么做呢？ </p>
+<p>重新定义一个字段，在xml定义使用该字段代表 maxLength 的值，自定义 view 里面获取该字段。 </p>
+<ol>
+<li><p>定义 edit_text_count_max_length 字段<br><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_01.png" alt=""></p>
+</li>
+<li><p>xml 声明的时候，使用该字段<br><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_02.png" alt=""></p>
+</li>
+<li><p>自定义 view 时候使用该字段<br><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_03.png" alt=""></p>
+</li>
+</ol>
+<h3 id="实战练习"><a href="#实战练习" class="headerlink" title="实战练习"></a>实战练习</h3><ol>
+<li><p><a href="https://github.com/ansuote/hdqlibrary/blob/master/src/main/java/com/lkl/ansuote/hdqlibrary/widget/EditTextCountView.kt" target="_blank" rel="external">自定义 EditText 实现右下角显示使用字数（kotlin）</a> </p>
+</li>
+<li><p><a href="https://github.com/ansuote/Training/tree/master/app/src/main/java/com/lkl/ansuote/traning/module/widget/piechart" target="_blank" rel="external">饼状图练习(kotlin)</a> </p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/ansuote/BlogResource/master/img/%E8%87%AA%E5%AE%9A%E4%B9%89view_04.png" alt=""></p>
+<h3 id="感谢"><a href="#感谢" class="headerlink" title="感谢"></a>感谢</h3><p>本文中思维导图里面引用的图片，来自下面参考文章里面的截图，感谢大佬们的总结。 </p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><ol>
+<li><p>Android 开发艺术探索 - 第3 ，4 章 </p>
+</li>
+<li><p><a href="http://www.gcssloop.com/customview/CustomViewIndex/" target="_blank" rel="external">安卓自定义View教程目录</a> </p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/3d2c49315d68" target="_blank" rel="external">图解View测量、布局及绘制原理</a> </p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/c84693096e41" target="_blank" rel="external">自定义View，有这一篇就够了 - 简书</a> </p>
+</li>
+<li><p><a href="https://juejin.im/entry/586e1f988d6d810058b67f3e" target="_blank" rel="external">Android 自定义 View 合集 - Android - 掘金</a> </p>
+</li>
+<li><p><a href="https://blog.csdn.net/dmk877/article/details/51550031" target="_blank" rel="external">Android开发之getX，getRawX,getWidth,getTranslationX等的区别</a> </p>
+</li>
+<li><p><a href="https://github.com/chenzongwen/MiClockView" target="_blank" rel="external">GitHub - chenzongwen/MiClockView</a> </p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/30594144" target="_blank" rel="external">onDraw顺序动态图</a> </p>
+</li>
+<li><p><a href="https://stackoverflow.com/questions/8069015/how-to-get-edittext-maxlength-setting-in-code" target="_blank" rel="external">How to Get EditText maxLength setting in code</a> </p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/ansuote_alipay.png" alt="ansuote WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/ansuote_wechatpay.png" alt="ansuote Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/08/24/Android 国际化总结/" rel="prev" title="Android 国际化总结">
+                Android 国际化总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODU1Mi81MTIz"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="ansuote" />
+          <p class="site-author-name" itemprop="name">ansuote</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#思维导图"><span class="nav-number">1.</span> <span class="nav-text">思维导图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#知识点补充"><span class="nav-number">2.</span> <span class="nav-text">知识点补充</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#坐标详解"><span class="nav-number">2.1.</span> <span class="nav-text">坐标详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#View提供获取坐标方法"><span class="nav-number">2.1.1.</span> <span class="nav-text">View提供获取坐标方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#MotionEvent提供的方法"><span class="nav-number">2.1.2.</span> <span class="nav-text">MotionEvent提供的方法</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getMeasureWidth-和-getWidth"><span class="nav-number">2.2.</span> <span class="nav-text">getMeasureWidth() 和 getWidth()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#硬件加速"><span class="nav-number">2.3.</span> <span class="nav-text">硬件加速</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#onMeasure-onLayout-onDraw-流程详解"><span class="nav-number">2.4.</span> <span class="nav-text">onMeasure, onLayout, onDraw 流程详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#onMeasure"><span class="nav-number">2.4.1.</span> <span class="nav-text">onMeasure</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#onLayout"><span class="nav-number">2.4.2.</span> <span class="nav-text">onLayout</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#onDraw"><span class="nav-number">2.4.3.</span> <span class="nav-text">onDraw</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#易忘点"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">易忘点</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">3.</span> <span class="nav-text">Q&A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义-view-xml预览空白"><span class="nav-number">3.1.</span> <span class="nav-text">自定义 view , xml预览空白</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取系统控件的某些xml定义值"><span class="nav-number">3.2.</span> <span class="nav-text">获取系统控件的某些xml定义值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实战练习"><span class="nav-number">4.</span> <span class="nav-text">实战练习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#感谢"><span class="nav-number">5.</span> <span class="nav-text">感谢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文章"><span class="nav-number">6.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ansuote</span>
+</div>
+
+
+<!--
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+-->
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
